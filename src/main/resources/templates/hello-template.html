@@ -1,0 +1,11 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<p th:text="'hello ' + ${name}" >hello! empty</p>
+<!-- 서버 타서 돌면 text 값이 나오고 그냥 경로를 통해서 접근하면 hello! empty 부분이 출력됨-->
+</body>
+</html>
