@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
 @Service
@@ -76,6 +77,8 @@ public class ContentService {
     public ResponseEntity<?> insContent(Content content, Part file, String path) {
         try {
             String fileName = file.getSubmittedFileName();
+            UUID uuid = UUID.randomUUID();
+            fileName = uuid.toString() + "_" + fileName;
             content.setImg(fileName);
             dataDao.insert(packageName + "insContent", content);
             InputStream inputStream = file.getInputStream();
@@ -116,4 +119,10 @@ public class ContentService {
         return dataDao.delete(packageName+"deleteContent",content);
     }
 
+    //마이페이지
+    public List<Content> getMyPageContents(int myId){
+        Content content = new Content();
+        content.setM_id(myId);
+        return dataDao.selectList(packageName+"getMyPageContents", content);
+    }
 }

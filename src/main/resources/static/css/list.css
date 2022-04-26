@@ -1,0 +1,26 @@
+.f_size {
+    font-size: 20px;
+}
+
+.wrap {
+    width: 900px;
+    margin: auto;
+}
+
+header {
+    height: 90px;
+}
+
+nav {
+    height: 50px;
+}
+
+.acolor:hover {
+    color: black;
+}
+
+nav>ul>li {
+    font-size: medium;
+    font-weight: bold;
+}
+

@@ -102,4 +102,16 @@
         FROM CONTENT
         WHERE IDX = #{idx}
     </delete>
+
+
+    <select id="getMyPageContents" parameterType="content" resultType="content">
+        SELECT
+         *
+        FROM CONTENT
+        WHERE M_ID = ${m_id}
+    </select>
+
+
 </mapper>
+
+

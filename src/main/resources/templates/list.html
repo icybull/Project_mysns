@@ -1,37 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymleaf.org">
 <head>
-	<title>시작 화면</title>
+	<title>MySNS</title>
 	<meta charset="UTF-8">
 	<meta name="_csrf_header" content="${_csrf.headerName}" />
 	<meta name="_csrf" content="${_csrf.token}" />
-	<style>
-		.f_size {
-			font-size: 20px;
-		}
-
-		.wrap {
-			width: 900px;
-			margin: auto;
-		}
-
-		header {
-			height: 90px;
-		}
-
-		nav {
-			height: 50px;
-		}
-
-		.acolor:hover {
-			color: black;
-		}
-
-		nav>ul>li {
-			font-size: medium;
-			font-weight: bold;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="/css/list.css">
 	<link rel="stylesheet"
 		  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
 		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -62,17 +36,18 @@
 <body>
 	<div class="wrap container">
 		<header>
-			<form action="" method="get" class="d-flex mb-4">
+			<!-- action 속성 디폴트 값은 해당 페이지 호출할때와 같은 방식으로 처리 -->
+			<form action="" method="get" class="d-flex mb-4" id="frm">
 				<input type="hidden" id="page" name="page" value="0">
 				<div class="col-5">
-					<span class="display-4 font-weight-bold text-primary">KIMSTAGRAM</span>
+					<span class="display-4 font-weight-bold text-primary"><a href="/home/show?page=0" style="text-decoration: none;">KIMSTAGRAM</a></span>
 				</div>
 				<div class="col-7">
 					<div class="h-100 d-flex align-items-center">
 						<div class="input-group mb-2">
 							<input type="text" class="form-control" id="searchWord" name="searchWord">
 							<div class="input-group-append">
-								<button type="submit" class="btn btn-secondary">검색</button>
+								<button type="button" class="btn btn-secondary">검색</button>
 							</div>
 						</div>
 					</div>
@@ -81,10 +56,10 @@
 		</header>
 		<nav class="bg-primary">
 			<ul class="nav nav-fill h-100 align-items-center">
-				<li class="nav-item"><a href="/home/show?page=0" class="text-dark">Home</a></li>
-				<li class="nav-item"><a href="/home/new" class="text-dark">New</a></li>
-				<li class="nav-item"><a href="follow?obj=show" class="text-dark">Follow</a></li>
-				<li class="nav-item"><a href="mypage.jsp" class="text-dark">MyPage</a></li>
+				<li class="nav-item"><a href="/home/show?page=0" class="text-dark" style="text-decoration: none;">Home</a></li>
+				<li class="nav-item"><a href="/home/new" class="text-dark" style="text-decoration: none;">New</a></li>
+				<li class="nav-item"><a href="" class="text-dark" style="text-decoration: none;">Follow</a></li>
+				<li class="nav-item"><a href="/home/mypage" class="text-dark" style="text-decoration: none;">MyPage</a></li>
 			</ul>
 		</nav>
 		<section class="d-flex">
@@ -168,6 +143,13 @@
 			</article>
 		</section>
 	</div>
+<script>
+	$('#frm').keypress(function (e){
+		if(e.which == 13){
+			BTN_LOGIN();
+		}
+	})
+</script>
 </body>
 </html>
 

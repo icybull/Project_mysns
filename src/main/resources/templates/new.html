@@ -5,33 +5,7 @@
     <meta charset="UTF-8">
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta name="_csrf" content="${_csrf.token}"/>
-    <style>
-        .f_size {
-            font-size: 20px;
-        }
-
-        .wrap {
-            width: 900px;
-            margin: auto;
-        }
-
-        header {
-            height: 90px;
-        }
-
-        nav {
-            height: 50px;
-        }
-
-        .acolor:hover {
-            color: black;
-        }
-
-        nav > ul > li {
-            font-size: medium;
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -124,27 +98,31 @@
 </head>
 <body>
 <div class="wrap container">
-    <header class="d-flex mb-4">
-        <div class="col-5">
-            <span class="display-4 font-weight-bold text-primary">KIMSTAGRAM</span>
-        </div>
-        <div class="col-7">
-            <div class="h-100 d-flex align-items-center">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control">
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-secondary">검색</button>
+    <header>
+        <!-- action 속성 디폴트 값은 해당 페이지 호출할때와 같은 방식으로 처리 -->
+        <form action="" method="get" class="d-flex mb-4">
+            <input type="hidden" id="page" name="page" value="0">
+            <div class="col-5">
+                <span class="display-4 font-weight-bold text-primary no_line"><a href="/home/show?page=0" style="text-decoration: none;">KIMSTAGRAM</a></span>
+            </div>
+            <div class="col-7">
+                <div class="h-100 d-flex align-items-center">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="searchWord" name="searchWord">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary">검색</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </header>
     <nav class="bg-primary">
         <ul class="nav nav-fill h-100 align-items-center">
-            <li class="nav-item"><a href="/home/show?page=0" class="text-dark">Home</a></li>
-            <li class="nav-item"><a href="new.jsp" class="text-dark">New</a></li>
-            <li class="nav-item"><a href="follow?obj=show" class="text-dark">Follow</a></li>
-            <li class="nav-item"><a href="mypage.jsp" class="text-dark">MyPage</a></li>
+            <li class="nav-item"><a href="/home/show?page=0" class="text-dark no_line" style="text-decoration: none;">Home</a></li>
+            <li class="nav-item"><a href="/home/new" class="text-dark no_line" style="text-decoration: none;">New</a></li>
+            <li class="nav-item"><a href="" class="text-dark no_line" style="text-decoration: none;">Follow</a></li>
+            <li class="nav-item"><a href="" class="text-dark no_line" style="text-decoration: none;">MyPage</a></li>
         </ul>
     </nav>
     <section class="d-flex">
@@ -165,41 +143,34 @@
             <div class="ml-4 mt-4">
                 <form action="" enctype="multipart/form-data"
                       class="d-flex" id="frm">
-                <th:block th:if="${content} == null">
                     <div>
                         <div style="width: 200px; height: 300px; border: solid 1px;">
                             <img id="View" src="#" alt="이미지 미리보기" width="200px"
                                  height="300px"/>
                         </div>
-                        <input type='file' id="file1" name="file"/>
+                        <input type='file' id="file" name="file"/>
                     </div>
-                    <div>
+                    <th:block th:if="${content} == null">
                         <div>
-                            <span class="font-weight-bold">제목<br></span><input
-                                type="text" name="title" id="title1">
+                            <div>
+                                <span class="font-weight-bold">제목<br></span><input
+                                    type="text" name="title" id="title1">
+                            </div>
+                            <div>
+                                <span class="font-weight-bold">글내용<br></span>
+                                <textarea name="content" cols="30" rows="10" id="content1"></textarea>
+                            </div>
+                            <button class="btn" type="button" onclick="BTN_REG()">등록</button>
+                            <a href="/home/show?page=0">
+                                <button class="btn"
+                                        type="button">취소
+                                </button>
+                            </a>
                         </div>
-                        <div>
-                            <span class="font-weight-bold">글내용<br></span>
-                            <textarea name="content" cols="30" rows="10" id="content1"></textarea>
-                        </div>
-                        <button class="btn" type="button" onclick="BTN_REG()">등록</button>
-                        <a href="/home/show?page=0">
-                            <button class="btn"
-                                    type="button">취소
-                            </button>
-                        </a>
-                    </div>
-                </th:block>
-                <th:block th:unless="${content} == null">
+                    </th:block>
+                    <th:block th:unless="${content} == null">
                         <div>
                             <input type="hidden" id="idx" name="idx" th:value="${content.idx}">
-                        </div>
-                        <div>
-                            <div style="width: 200px; height: 300px; border: solid 1px;">
-                                <img id="View" src="#" alt="이미지 미리보기" width="200px"
-                                     height="300px"/>
-                            </div>
-                            <input type='file' id="file2" name="file"/>
                         </div>
                         <div>
                             <div>
@@ -217,7 +188,7 @@
                                 </button>
                             </a>
                         </div>
-                </th:block>
+                    </th:block>
                 </form>
             </div>
         </article>

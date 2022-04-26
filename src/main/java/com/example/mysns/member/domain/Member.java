@@ -4,12 +4,21 @@ package com.example.mysns.member.domain;
 public class Member {
 
     private int id;
+    private String profileImg;
     private String email;
     private String name;
     private String nick;
     private String pwd;
     private String address;
 
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 
     public int getId() {
         return id;
@@ -18,6 +27,7 @@ public class Member {
     public void setId(int id) {
         this.id = id;
     }
+
     public String getEmail() {
         return email;
     }

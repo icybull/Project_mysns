@@ -72,6 +72,11 @@ public class MemberService {
         return "ok";
     }
 
+    public Member getMyPageMember(int myId){
+        Member member = new Member();
+        member.setId(myId);
+        return dataDao.selectOne(packageName+"getMyPageMember", member);
+    }
 
 
 

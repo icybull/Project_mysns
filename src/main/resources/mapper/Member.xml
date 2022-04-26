@@ -44,4 +44,13 @@
 
     </insert>
 
+    <select id="getMyPageMember" parameterType="member" resultType="member">
+        SELECT
+               PROFILEIMG AS profileImg,
+               EMAIL      AS email,
+               NAME       AS name,
+               NICK       AS nick
+        FROM MEMBER
+        WHERE ID = #{id}
+    </select>
 </mapper>

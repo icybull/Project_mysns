@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>MySNS</title>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
+    <meta name="_csrf" content="${_csrf.token}" />
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function logOut(){
+            if(confirm('로그아웃 하시겠습니까?')){
+                location.href="/login/logout";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="wrap container">
+    <header>
+        <!-- action 속성 디폴트 값은 해당 페이지 호출할때와 같은 방식으로 처리 -->
+        <form action="" method="get" class="d-flex mb-4" id="frm">
+            <input type="hidden" id="page" name="page" value="0">
+            <div class="col-5">
+                <span class="display-4 font-weight-bold text-primary no_line"><a href="/home/show?page=0" style="text-decoration: none;">KIMSTAGRAM</a></span>
+            </div>
+            <div class="col-7">
+                <div class="h-100 d-flex align-items-center">
+                    <div class="input-group mb-2">
+                        <input type="text" class="form-control" id="searchWord" name="searchWord">
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-secondary">검색</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </header>
+    <nav class="bg-primary">
+        <ul class="nav nav-fill h-100 align-items-center">
+            <li class="nav-item"><a href="/home/show?page=0" class="text-dark" style="text-decoration: none;">Home</a></li>
+            <li class="nav-item"><a href="/home/new" class="text-dark" style="text-decoration: none;">New</a></li>
+            <li class="nav-item"><a href="" class="text-dark" style="text-decoration: none;">Follow</a></li>
+            <li class="nav-item"><a href="/home/mypage" class="text-dark" style="text-decoration: none;">MyPage</a></li>
+        </ul>
+    </nav>
+    <section class="d-flex">
+        <aside>
+            <div class="bg-warning"
+                 style="width: 150px; height: 150px; border-radius: 5px;">
+                <h5>
+                    안녕하세요 <br th:text="${nick}+'('+${name}+')님'">
+                </h5>
+                <br>
+                <button class="btn" type="button" onclick="logOut()">Logout</button>
+            </div>
+        </aside>
+        <article style="height: 1000px;">
+            <!-- 프로필 사진, 이메일, 이름, 닉네임, 게시물 갯수, 팔로우 수, 팔로워 수, 내 컨텐츠  -->
+
+
+
+
+
+        </article>
+    </section>
+</div>
+</body>
+</html>

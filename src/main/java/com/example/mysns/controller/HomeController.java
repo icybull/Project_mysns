@@ -2,6 +2,8 @@ package com.example.mysns.controller;
 
 import com.example.mysns.content.domain.Content;
 import com.example.mysns.content.service.ContentService;
+import com.example.mysns.member.domain.Member;
+import com.example.mysns.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,8 @@ import java.util.List;
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 1024 * 1024 * 10, maxRequestSize = 1024 * 1024 * 10 * 5)
 public class HomeController {
 
+    @Autowired
+    private MemberService memberService;
     private ContentService contentService;
 
     @Autowired
@@ -137,5 +141,22 @@ public class HomeController {
             ResponseEntity result = contentService.updContent(content,file,path);
             return result;
         }
+    }
+
+    @GetMapping("/mypage")
+    public String myPage( HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        String nick = String.valueOf(session.getAttribute("nick"));
+        String name = String.valueOf(session.getAttribute("name"));
+        if(nick.equals("") || nick == null || name.equals("") || name == null || session.getAttribute("id") == null){
+            return "redirect:/";
+        }
+        model.addAttribute("nick", nick);
+        model.addAttribute("name", name);
+        int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
+        Member member = memberService.getMyPageMember(myId);
+        List<Content> contentList = contentService.getMyPageContents(myId);
+
+        return "mypage";
     }
 }
