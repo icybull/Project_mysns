@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>시작 화면</title>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <style>
+        .f_size {
+            font-size: 20px;
+        }
+
+        .wrap {
+            width: 900px;
+            margin: auto;
+        }
+
+        header {
+            height: 90px;
+        }
+
+        nav {
+            height: 50px;
+        }
+
+        .acolor:hover {
+            color: black;
+        }
+
+        nav > ul > li {
+            font-size: medium;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function logOut(){
+            if(confirm('로그아웃 하시겠습니까?')){
+                location.href="/login/logout";
+            }
+        }
+
+        function BTN_REG(){
+            let title = $("#title").val();
+            let content = $("#content").val();
+            if(title == "" || title == null){
+                alert("제목을 입력해주세요.");
+                return;
+            }
+            if(content == "" || content == null){
+                alert("내용을 입력해주세요.");
+                return;
+            }
+            let form = $('#frm')[0];
+            let params = new FormData(form);
+            $.ajax({
+                url :"/home/new",
+                data : params,
+                datatype : 'json',
+                enctype: 'multipart/form-data',
+                type : "POST",
+                processData: false,
+                contentType: false,
+                success : function(result){
+                    if(result == 'notFile'){
+                        alert('이미지 파일이 존재 하지 않습니다.');
+                    } else {
+                        alert('저장 완료되었습니다.');
+                        location.href="/home/show?page=0";
+                    }
+                }
+            });
+        }
+        function BTN_REG2(){
+            let title = $("#title").val();
+            let content = $("#content").val();
+            if(title == "" || title == null){
+                alert("제목을 입력해주세요.");
+                return;
+            }
+            if(content == "" || content == null){
+                alert("내용을 입력해주세요.");
+                return;
+            }
+            let form = $('#frm')[0];
+            let params = new FormData(form);
+            $.ajax({
+                url :"/home/modify",
+                data : params,
+                datatype : 'json',
+                enctype: 'multipart/form-data',
+                type : "POST",
+                processData: false,
+                contentType: false,
+                success : function(result){
+                    if(result == 'notFile'){
+                        alert('이미지 파일이 존재 하지 않습니다.');
+                    } else {
+                        alert('수정 완료되었습니다.');
+                        location.href="/home/show?page=0";
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="wrap container">
+    <header class="d-flex mb-4">
+        <div class="col-5">
+            <span class="display-4 font-weight-bold text-primary">KIMSTAGRAM</span>
+        </div>
+        <div class="col-7">
+            <div class="h-100 d-flex align-items-center">
+                <div class="input-group mb-2">
+                    <input type="text" class="form-control">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-secondary">검색</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <nav class="bg-primary">
+        <ul class="nav nav-fill h-100 align-items-center">
+            <li class="nav-item"><a href="/home/show?page=0" class="text-dark">Home</a></li>
+            <li class="nav-item"><a href="new.jsp" class="text-dark">New</a></li>
+            <li class="nav-item"><a href="follow?obj=show" class="text-dark">Follow</a></li>
+            <li class="nav-item"><a href="mypage.jsp" class="text-dark">MyPage</a></li>
+        </ul>
+    </nav>
+    <section class="d-flex">
+        <aside style="width: 150px;">
+            <div class="bg-warning"
+                 style="width: 150px; height: 150px; border-radius: 5px;">
+                <h5>
+                    안녕하세요 <br th:text="${nick}+'('+${name}+')님'">
+                </h5>
+                <br>
+                <button class="btn" type="button" onclick="logOut()">Logout</button>
+            </div>
+        </aside>
+
+
+        <article style="width: 900px; height: 1000px;"
+                 class="bg-danger d-flex justify-content-center">
+            <div class="ml-4 mt-4">
+                <th:block th:if="${content} == null">
+                <form action="" enctype="multipart/form-data"
+                      class="d-flex" id="frm">
+                    <div>
+                        <div style="width: 200px; height: 300px; border: solid 1px;">
+                            <img id="View" src="#" alt="이미지 미리보기" width="200px"
+                                 height="300px"/>
+                        </div>
+                        <input type='file' id="file" name="file"/>
+                    </div>
+                    <div>
+                        <div>
+                            <span class="font-weight-bold">제목<br></span><input
+                                type="text" name="title" id="title">
+                        </div>
+                        <div>
+                            <span class="font-weight-bold">글내용<br></span>
+                            <textarea name="content" cols="30" rows="10" id="content"></textarea>
+                        </div>
+                        <button class="btn" type="button" onclick="BTN_REG()">등록</button>
+                        <a href="/home/show?page=0">
+                            <button class="btn"
+                                    type="button">취소
+                            </button>
+                        </a>
+                    </div>
+                </form>
+                </th:block>
+                <th:block th:unless="${content} == null">
+                    <form action="" enctype="multipart/form-data"
+                          class="d-flex" id="frm">
+                        <div>
+                            <input type="hidden" id="idx" name="idx" th:value="${content.idx}">
+                        </div>
+                        <div>
+                            <div style="width: 200px; height: 300px; border: solid 1px;">
+                                <img id="View" src="#" alt="이미지 미리보기" width="200px"
+                                     height="300px"/>
+                            </div>
+                            <input type='file' id="file" name="file"/>
+                        </div>
+                        <div>
+                            <div>
+                                <span class="font-weight-bold">제목<br></span><input
+                                    type="text" name="title" id="title" th:value="${content.title}">
+                            </div>
+                            <div>
+                                <span class="font-weight-bold">글내용<br></span>
+                                <textarea name="content" cols="30" rows="10" id="content" th:text="${content.content}"></textarea>
+                            </div>
+                            <button class="btn" type="button" onclick="BTN_REG2()">등록</button>
+                            <a href="/home/show?page=0">
+                                <button class="btn"
+                                        type="button">취소
+                                </button>
+                            </a>
+                        </div>
+                    </form>
+                </th:block>
+            </div>
+        </article>
+    </section>
+    <script src="http://madalla.kr/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#file").on('change', function () {
+                readURL(this);
+            });
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#View').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <script>
+        window.onload = () => {
+            if (new URL(location.href).searchParams.get('noF')) {
+                alert("파일이 존재하지 않습니다.");
+            }
+        };
+    </script>
+</div>
+</body>
+</html>
+
+
+
+

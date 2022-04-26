@@ -4,6 +4,33 @@
     <title>Hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+<script type="text/javascript">
+    if(confirm('<spring:message code="M0002279"/>')){	// 부서를 등록 하시겠습니까?
+        let url = "/ezstart.ws";
+        let param = JSON.stringify($('#frm').serializeObject());
+        params = "PID=mng0204IB&jsonData=["+encodeURIComponent(param)+"]";
+        $.ajax({
+            type:"POST",
+            url:url,
+            data:params,
+            success:function(jsondata,stat){
+                try {
+                    if(jsondata.result == '1000'){
+                        alert('<spring:message code="M0002284"/>'); // 동일한 부서ID가 존재합니다.
+                    }else if(jsondata.result == '1'){
+                        alert('<spring:message code="M0002096"/>'); // 등록되었습니다.
+                        BTN_COMM_READ();
+                    }else{
+                        alert(jsondata.resultMessage.message);
+                    }
+
+                } catch(e) {
+                } finally{
+                }
+            }
+        });
+    }
+</script>
 <body>
 <p th:text="'안녕하세요.' + ${data}" ></p>
 <a href="/hello-mvc?name=spring"><button>hello-template</button></a>

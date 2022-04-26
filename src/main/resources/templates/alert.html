@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+
+        let msg = [[${msg}]];
+        alert(msg);
+        location.replace([[${url}]]);
+
+        /*]]>*/
+    </script>
+</head>
+<body>
+
+</body>
+</html>

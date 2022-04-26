@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mysns.member.domain">
+
+    <select id="selAllMember" resultType="member">
+        SELECT *
+        FROM MEMBER
+    </select>
+
+    <select id="selMember" resultType="member">
+
+    </select>
+
+    <select id="findByEmail" parameterType="member" resultType="member">
+        SELECT *
+        FROM MEMBER
+        WHERE EMAIL = #{email}
+    </select>
+
+    <select id="findByNick" parameterType="member" resultType="member">
+        SELECT *
+        FROM MEMBER
+        WHERE NICK = #{nick}
+    </select>
+
+    <insert id="insMember" parameterType="member">
+        INSERT INTO MEMBER
+        (
+         EMAIL,
+         NAME,
+         NICK,
+         PWD,
+         ADDRESS
+        )
+        VALUES
+        (
+         #{email},
+         #{name},
+         #{nick},
+         #{pwd},
+         #{address}
+        )
+
+    </insert>
+
+</mapper>

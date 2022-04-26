@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mysns.content.domain">
+
+    <!-- 메인 페이지 갯수 구하기 위함 -->
+    <select id="contentCnt" resultType="int">
+        SELECT COUNT(*)
+        FROM CONTENT
+    </select>
+    <!-- 메인화면에 보여질 컨텐츠 -->
+    <select id="selContentPage" parameterType="content" resultType="content">
+        SELECT
+         C.IDX     AS idx,
+         C.IMG     AS img,
+         C.TITLE   AS title,
+         C.CONTENT AS content,
+         C.NICK    AS nick,
+         C.M_ID   AS m_id
+        FROM
+
+            (
+            SELECT ROWNUM N, A.*,B.NICK
+                FROM CONTENT A
+                INNER JOIN MEMBER B
+                ON B.ID = A.M_ID
+                ) C
+
+        WHERE C.N
+         BETWEEN #{page} * 8 + 1
+         AND #{page} * 8 + 8
+    </select>
+
+    <!-- 컨텐츠 추가 -->
+    <insert id="insContent" parameterType="content">
+        INSERT INTO CONTENT
+        (
+         IMG,
+         TITLE,
+         CONTENT,
+         M_ID,
+         REG_DATETIME
+        )
+        VALUES
+        (
+         #{img},
+         #{title},
+         #{content},
+         #{m_id},
+         CURRENT_TIMESTAMP
+        )
+    </insert>
+    <!-- 수정 버튼 -->
+    <update id="updContent" parameterType="content">
+        UPDATE CONTENT
+        SET IMG     = #{img},
+            TITLE   = #{title},
+            CONTENT = #{content}
+        WHERE IDX = #{idx}
+    </update>
+    <select id="modifyContent" parameterType="content" resultType="content">
+        SELECT
+            IDX     AS idx,
+            TITLE   AS title,
+            CONTENT AS content
+        FROM CONTENT
+        WHERE IDX = #{idx}
+    </select>
+    <!-- 삭제 버튼 -->
+    <delete id="deleteContent" parameterType="content">
+        DELETE
+        FROM CONTENT
+        WHERE IDX = #{idx}
+    </delete>
+</mapper>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+	<title>시작 화면</title>
+	<meta charset="UTF-8">
+	<meta name="_csrf_header" content="${_csrf.headerName}" />
+	<meta name="_csrf" content="${_csrf.token}" />
+	<style>
+		.f_size {
+			font-size: 20px;
+		}
+
+		.wrap {
+			width: 900px;
+			margin: auto;
+		}
+
+		header {
+			height: 90px;
+		}
+
+		nav {
+			height: 50px;
+		}
+
+		.acolor:hover {
+			color: black;
+		}
+
+		nav>ul>li {
+			font-size: medium;
+			font-weight: bold;
+		}
+	</style>
+	<link rel="stylesheet"
+		  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+		  crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+			integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+			crossorigin="anonymous"></script>
+	<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+			integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+			crossorigin="anonymous"></script>
+	<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+			integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+			crossorigin="anonymous"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		function logOut(){
+			if(confirm('로그아웃 하시겠습니까?')){
+				location.href="/login/logout";
+			}
+		}
+	</script>
+</head>
+<body>
+	<div class="wrap container">
+		<header class="d-flex mb-4">
+			<div class="col-5">
+				<span class="display-4 font-weight-bold text-primary">KIMSTAGRAM</span>
+			</div>
+			<div class="col-7">
+				<div class="h-100 d-flex align-items-center">
+					<div class="input-group mb-2">
+						<input type="text" class="form-control">
+						<div class="input-group-append">
+							<button type="button" class="btn btn-secondary">검색</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</header>
+		<nav class="bg-primary">
+			<ul class="nav nav-fill h-100 align-items-center">
+				<li class="nav-item"><a href="/home/show?page=0" class="text-dark">Home</a></li>
+				<li class="nav-item"><a href="/home/new" class="text-dark">New</a></li>
+				<li class="nav-item"><a href="follow?obj=show" class="text-dark">Follow</a></li>
+				<li class="nav-item"><a href="mypage.jsp" class="text-dark">MyPage</a></li>
+			</ul>
+		</nav>
+		<section class="d-flex">
+			<aside>
+				<div class="bg-warning"
+					style="width: 150px; height: 150px; border-radius: 5px;">
+					<h5>
+						안녕하세요 <br th:text="${nick}+'('+${name}+')님'">
+					</h5>
+					<br>
+					<button class="btn" type="button" onclick="logOut()">Logout</button>
+				</div>
+			</aside>
+			<article style="height: 1000px;">
+				<div class="bg-warning p-2 wrap flex-wrap d-flex justify-content-between">
+						<div th:each="cd : ${cdArr}">
+							<h6 th:text="${cd.title}"></h6>
+							<img th:src="'/upload/'+ ${cd.img}" alt="게시글 사진" style="width: 200px; height:300px">
+							<h6 th:text="${cd.nick}+' - '+${cd.content}"></h6>
+							<div th:if="${cd.mine}">
+								<input type="hidden" id="idx" name="idx" th:value="${cd.idx}" />
+								<a th:href="@{/home/modify(idx=${cd.idx})}"><button
+										class="btn" style="width: 90px;">수정</button></a>
+								<a th:href="@{/home/delete(idx=${cd.idx})}"><button
+										class="btn" style="width: 90px; margin-left: 10px">삭제</button></a>
+							</div>
+							<div th:unless="${cd.mine}">
+								<button class="btn" style="width: 90px;" disabled>수정</button>
+								<button class="btn" style="width: 90px; margin-left: 10px;"
+										disabled>삭제</button>
+							</div>
+						</div>
+				</div>
+
+				<div th:with="startPage=${page-(page%5)}">
+					<ul class="nav d-flex justify-content-center">
+						<div th:if="${page>0}">
+							<li class="ml-2"><a th:href="@{/home/show(page=${page-1})}">◁</a></li>
+						</div>
+						<th:block th:each="i : ${#numbers.sequence(0,4)}">
+							<div th:if="${i+startPage+1<=pageCnt+1}">
+								<div th:if="${page == i+startPage}">
+									<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage})}"
+														class="font-weight-bold" th:text="${i+startPage+1}"></a></li>
+								</div>
+								<div th:unless="${page == i+startPage}">
+									<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage})}" th:text="${i+startPage+1}"></a></li>
+								</div>
+							</div>
+						</th:block>
+						<div th:if="${page<pageCnt}">
+							<li class="ml-2"><a th:href="@{/home/show(page=${page+1})}">▷</a></li>
+						</div>
+					</ul>
+				</div>
+			</article>
+		</section>
+	</div>
+</body>
+</html>
+
+
+
+

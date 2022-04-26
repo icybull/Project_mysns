@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script th:inline="javascript">
+    </script>
+</head>
+<body>
+<h1>안녕하세요</h1>
+<h3 th:text="'이름은' + ${name}+'이고'"></h3>
+<h3 th:text="'닉네임은' +${nick}+'입니다.'"></h3>
+</body>
+</html>

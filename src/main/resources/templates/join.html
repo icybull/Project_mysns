@@ -1,0 +1,142 @@
+<head>
+    <title>회원가입</title>
+    <style>
+        .f_size {
+            font-size: 20px;
+        }
+    </style>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript" >
+        function BTN_REG(){
+            if($("#email").val() == "" || $("#email").val() == null){
+                alert("이메일을 입력해주세요.");
+                document.getElementById("email").focus();
+                return;
+            }
+            if($("#name").val() == "" || $("#name").val() == null){
+                alert("이름을 입력해주세요.");
+                document.getElementById("name").focus();
+                return;
+            }
+            if($("#nick").val() == "" || $("#nick").val() == null){
+                alert("닉네임을 입력해주세요.");
+                document.getElementById("nick").focus();
+                return;
+            }
+            if($("#pwd1").val() == "" || $("#pwd1").val() == null){
+                alert("비밀번호를 입력해주세요.");
+                document.getElementById("pwd1").focus();
+                return;
+            }
+            if($("#pwd2").val() == "" || $("#pwd2").val() == null){
+                alert("비밀번호를 한번 더 입력해주세요.");
+                document.getElementById("pwd2").focus();
+                return;
+            }
+            if($("#address").val() == "" || $("#address").val() == null){
+                alert("주소를 입력해주세요.");
+                document.getElementById("address").focus();
+                return;
+            }
+            if($("#pwd1").val() != $("#pwd2").val()){
+                alert("비밀번호가 일치하지 않습니다.");
+                return;
+            }
+
+                let params = $("#frm").serialize();
+            $.ajax({
+                url :"/login/join",
+                data : params,
+                datatype : 'text',
+                type : "POST",
+                success : function(result){
+                    if(result == 'isEmail'){
+                        alert("존재하는 이메일입니다.");
+                        document.getElementById("email").focus();
+                        return;
+                    } else if(result == 'isNick'){
+                        document.getElementById("nick").focus();
+                        alert("존재하는 닉네임입니다.");
+                        return;
+                    } else {
+                        alert("회원가입을 축하드립니다.");
+                        location.href="/";
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<header class="d-flex justify-content-center mt-5">
+    <h2><a href="/">KIMSTAGRAM</a></h2>
+</header>
+<section class="d-flex justify-content-center" style="height: 900px;">
+    <section>
+        <button class="btn btn-primary mt-4"
+                style="width: 500px; height: 50px;">
+            <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRifhBwWgV_xNLjFzJFkzg1XExdYGqAwxHKEw&usqp=CAU"
+                    alt="페이스북 로고" width="40px" height="40px" class="mr-1">Facebook으로
+            로그인
+        </button>
+        <form action="" id="frm" method="post">
+            <section class="mt-4">
+                <span class="font-weight-bold f_size">이메일 주소<br></span> <input
+                    type="text" style="width: 500px; height: 50px;" name="email"
+                    class="f_size" placeholder="  이메일 주소" id="email">
+            </section>
+            <section class="mt-4">
+                <span class="font-weight-bold f_size">이름<br></span> <input
+                    type="text" style="width: 500px; height: 50px;" class="f_size"
+                    name="name" id="name" placeholder="  성명">
+            </section>
+            <section class="mt-4">
+                <span class="font-weight-bold f_size">닉네임<br></span> <input
+                    type="text" style="width: 500px; height: 50px;" name="nick"
+                    class="f_size" placeholder="  사용자 이름" id="nick">
+            </section>
+            <section class="mt-4">
+                <span class="font-weight-bold f_size">PASSWORD<br></span> <input
+                    type="password" style="width: 500px; height: 50px;"
+                    name="pwd" class="f_size" id="pwd1"
+                    placeholder="  비밀번호">
+            </section>
+            <section class="mt-4">
+                <span class="font-weight-bold f_size">PASSWORD 확인<br></span> <input
+                    type="password" style="width: 500px; height: 50px;"
+                    name="pwd2" class="f_size" id="pwd2"
+                    placeholder="  비밀번호 확인">
+            </section>
+            <section class="mt-4">
+                <span class="font-weight-bold f_size">주소<br></span> <input
+                    type="text" style="width: 500px; height: 50px;"
+                    name="address" class="f_size" id="address"
+                    placeholder="  비밀번호 확인">
+            </section>
+            <input type="button" class="btn btn-primary mt-5 f_size" onclick="BTN_REG()"
+                   style="width: 500px; height: 50px;" id="join" value="가입하기">
+        </form>
+    </section>
+</section>
+</body>
+</html>
