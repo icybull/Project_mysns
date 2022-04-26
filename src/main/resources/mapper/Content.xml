@@ -8,8 +8,14 @@
         SELECT COUNT(*)
         FROM CONTENT
     </select>
+    <select id="searchCnt" resultType="int" parameterType="content">
+        SELECT COUNT(*)
+        FROM CONTENT
+        WHERE TITLE LIKE CONCAT('%',#{searchWord},'%')
+         OR CONTENT LIKE CONCAT('%',#{searchWord},'%')
+    </select>
     <!-- 메인화면에 보여질 컨텐츠 -->
-    <select id="selContentPage" parameterType="content" resultType="content">
+    <select id="selContents" parameterType="content" resultType="content">
         SELECT
          C.IDX     AS idx,
          C.IMG     AS img,
@@ -29,6 +35,29 @@
         WHERE C.N
          BETWEEN #{page} * 8 + 1
          AND #{page} * 8 + 8
+    </select>
+    <select id="searchContents" parameterType="content" resultType="content">
+        SELECT
+            C.IDX     AS idx,
+            C.IMG     AS img,
+            C.TITLE   AS title,
+            C.CONTENT AS content,
+            C.NICK    AS nick,
+            C.M_ID   AS m_id
+        FROM
+
+            (
+                SELECT ROWNUM N, A.*,B.NICK
+                FROM CONTENT A
+                         INNER JOIN MEMBER B
+                                    ON B.ID = A.M_ID
+                WHERE TITLE LIKE CONCAT('%',#{searchWord},'%')
+                   OR CONTENT LIKE CONCAT('%',#{searchWord},'%')
+            ) C
+
+        WHERE C.N
+                  BETWEEN #{page} * 8 + 1
+                  AND #{page} * 8 + 8
     </select>
 
     <!-- 컨텐츠 추가 -->
@@ -55,7 +84,8 @@
         UPDATE CONTENT
         SET IMG     = #{img},
             TITLE   = #{title},
-            CONTENT = #{content}
+            CONTENT = #{content},
+            MOD_DATE = CURRENT_TIMESTAMP
         WHERE IDX = #{idx}
     </update>
     <select id="modifyContent" parameterType="content" resultType="content">

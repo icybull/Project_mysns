@@ -11,7 +11,16 @@ public class Content {
 
     private boolean mine;
     private int page;
+    private String searchWord;
 
+
+    public String getSearchWord() {
+        return searchWord;
+    }
+
+    public void setSearchWord(String searchWord) {
+        this.searchWord = searchWord;
+    }
 
     public int getPage() {
         return page;

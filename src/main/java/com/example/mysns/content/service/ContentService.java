@@ -37,7 +37,7 @@ public class ContentService {
         System.out.println(page);
         Content content = new Content();
         content.setPage(page);
-        List<Content> list = dataDao.selectList(packageName+"selContentPage",content);
+        List<Content> list = dataDao.selectList(packageName+"selContents",content);
         for(Content c : list){
             if(c.getM_id() == myId){
                 c.setMine(true);
@@ -47,9 +47,27 @@ public class ContentService {
         }
         return list;
     }
+    public List<Content> searchContents(int myId, int page, Content content){
+        content.setPage(page);
+        List<Content> list = dataDao.selectList(packageName+"searchContents",content);
+        for(Content c : list){
+            if(c.getM_id() == myId){
+                c.setMine(true);
+            } else {
+                c.setMine(false);
+            }
+        }
+        return list;
+    }
+
     // 총 페이지 숫자 리턴
     public int selPageNum(){
         int preCount = dataDao.selectOne(packageName+"contentCnt");
+        int pageCnt = preCount % 8 == 0 ? preCount / 8 - 1 : preCount / 8;
+        return pageCnt;
+    }
+    public int searchPageNum(Content content){
+        int preCount = dataDao.selectOne(packageName+"searchCnt", content);
         int pageCnt = preCount % 8 == 0 ? preCount / 8 - 1 : preCount / 8;
         return pageCnt;
     }

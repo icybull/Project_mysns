@@ -61,20 +61,23 @@
 </head>
 <body>
 	<div class="wrap container">
-		<header class="d-flex mb-4">
-			<div class="col-5">
-				<span class="display-4 font-weight-bold text-primary">KIMSTAGRAM</span>
-			</div>
-			<div class="col-7">
-				<div class="h-100 d-flex align-items-center">
-					<div class="input-group mb-2">
-						<input type="text" class="form-control">
-						<div class="input-group-append">
-							<button type="button" class="btn btn-secondary">검색</button>
+		<header>
+			<form action="" method="get" class="d-flex mb-4">
+				<input type="hidden" id="page" name="page" value="0">
+				<div class="col-5">
+					<span class="display-4 font-weight-bold text-primary">KIMSTAGRAM</span>
+				</div>
+				<div class="col-7">
+					<div class="h-100 d-flex align-items-center">
+						<div class="input-group mb-2">
+							<input type="text" class="form-control" id="searchWord" name="searchWord">
+							<div class="input-group-append">
+								<button type="submit" class="btn btn-secondary">검색</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			</form>
 		</header>
 		<nav class="bg-primary">
 			<ul class="nav nav-fill h-100 align-items-center">
@@ -116,25 +119,50 @@
 						</div>
 				</div>
 
+				<!-- 페이지네이션 -->
 				<div th:with="startPage=${page-(page%5)}">
 					<ul class="nav d-flex justify-content-center">
+
 						<div th:if="${page>0}">
-							<li class="ml-2"><a th:href="@{/home/show(page=${page-1})}">◁</a></li>
+							<th:block th:if="${searchWord} == null">
+								<li class="ml-2"><a th:href="@{/home/show(page=${page-1})}">◁</a></li>
+							</th:block>
+							<th:block th:unless="${searchWord} == null">
+								<li class="ml-2"><a th:href="@{/home/show(page=${page-1},searchWord=${searchWord})}">◁</a></li>
+							</th:block>
 						</div>
+
+
+
 						<th:block th:each="i : ${#numbers.sequence(0,4)}">
 							<div th:if="${i+startPage+1<=pageCnt+1}">
 								<div th:if="${page == i+startPage}">
+									<th:block th:if="${searchWord} == null">
 									<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage})}"
 														class="font-weight-bold" th:text="${i+startPage+1}"></a></li>
+									</th:block>
+									<th:block th:unless="${searchWord} == null">
+										<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage},searchWord=${searchWord})}"
+															class="font-weight-bold" th:text="${i+startPage+1}"></a></li>
+									</th:block>
 								</div>
 								<div th:unless="${page == i+startPage}">
 									<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage})}" th:text="${i+startPage+1}"></a></li>
 								</div>
 							</div>
 						</th:block>
+
+
+
 						<div th:if="${page<pageCnt}">
-							<li class="ml-2"><a th:href="@{/home/show(page=${page+1})}">▷</a></li>
+							<th:block th:if="${searchWord} == null">
+								<li class="ml-2"><a th:href="@{/home/show(page=${page+1})}">▷</a></li>
+							</th:block>
+							<th:block th:unless="${searchWord} == null">
+								<li class="ml-2"><a th:href="@{/home/show(page=${page+1},searchWord=${searchWord})}">▷</a></li>
+							</th:block>
 						</div>
+
 					</ul>
 				</div>
 			</article>

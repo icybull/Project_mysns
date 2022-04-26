@@ -29,6 +29,9 @@ public class HomeController {
 
 
 
+
+    //검색
+
     // new 화면
     @GetMapping("/new") // 세션은 한번 getSession() 하면 parameter로 받으면 된다.
     public String newContent(HttpSession session, Model model){
@@ -60,9 +63,9 @@ public class HomeController {
 
 
 
-    // 홈 화면
+    // 홈 화면 컨텐츠 보여주기 + 검색 컨텐츠 보여주기
     @GetMapping("/show")
-    public String showContents(HttpServletRequest request, @RequestParam("page") int page, Model model){
+    public String showContents(HttpServletRequest request, @RequestParam("page") int page, @RequestParam(value = "searchWord",required = false) String searchWord , Model model){
         HttpSession session = request.getSession();
         String nick = String.valueOf(session.getAttribute("nick"));
         String name = String.valueOf(session.getAttribute("name"));
@@ -73,8 +76,20 @@ public class HomeController {
         model.addAttribute("name", name);
         int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
         model.addAttribute("page",page);
-        List<Content> cdArr = contentService.showContents(myId, page);
-        int pageCnt = contentService.selPageNum();
+
+        List<Content> cdArr = null;
+        int pageCnt = 0;
+        if(searchWord == null || searchWord.equals("")){
+            cdArr = contentService.showContents(myId, page);
+            pageCnt = contentService.selPageNum();
+        } else {
+            Content content = new Content();
+            content.setSearchWord(searchWord);
+            cdArr = contentService.searchContents(myId,page, content);
+            page = contentService.searchPageNum(content);
+            model.addAttribute(("searchWord"),searchWord);
+        }
+
         model.addAttribute("num", page);
         model.addAttribute("cdArr", cdArr);
         model.addAttribute("pageCnt", pageCnt);

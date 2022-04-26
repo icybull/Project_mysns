@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymleaf.org">
+<html lang="ko" xmlns:th="http://www.thymleaf.org">
 <head>
     <title>시작 화면</title>
     <meta charset="UTF-8">
@@ -59,8 +59,8 @@
         }
 
         function BTN_REG(){
-            let title = $("#title").val();
-            let content = $("#content").val();
+            let title = $("#title1").val();
+            let content = $("#content1").val();
             if(title == "" || title == null){
                 alert("제목을 입력해주세요.");
                 return;
@@ -90,8 +90,8 @@
             });
         }
         function BTN_REG2(){
-            let title = $("#title").val();
-            let content = $("#content").val();
+            let title = $("#title2").val();
+            let content = $("#content2").val();
             if(title == "" || title == null){
                 alert("제목을 입력해주세요.");
                 return;
@@ -163,24 +163,24 @@
         <article style="width: 900px; height: 1000px;"
                  class="bg-danger d-flex justify-content-center">
             <div class="ml-4 mt-4">
-                <th:block th:if="${content} == null">
                 <form action="" enctype="multipart/form-data"
                       class="d-flex" id="frm">
+                <th:block th:if="${content} == null">
                     <div>
                         <div style="width: 200px; height: 300px; border: solid 1px;">
                             <img id="View" src="#" alt="이미지 미리보기" width="200px"
                                  height="300px"/>
                         </div>
-                        <input type='file' id="file" name="file"/>
+                        <input type='file' id="file1" name="file"/>
                     </div>
                     <div>
                         <div>
                             <span class="font-weight-bold">제목<br></span><input
-                                type="text" name="title" id="title">
+                                type="text" name="title" id="title1">
                         </div>
                         <div>
                             <span class="font-weight-bold">글내용<br></span>
-                            <textarea name="content" cols="30" rows="10" id="content"></textarea>
+                            <textarea name="content" cols="30" rows="10" id="content1"></textarea>
                         </div>
                         <button class="btn" type="button" onclick="BTN_REG()">등록</button>
                         <a href="/home/show?page=0">
@@ -189,11 +189,8 @@
                             </button>
                         </a>
                     </div>
-                </form>
                 </th:block>
                 <th:block th:unless="${content} == null">
-                    <form action="" enctype="multipart/form-data"
-                          class="d-flex" id="frm">
                         <div>
                             <input type="hidden" id="idx" name="idx" th:value="${content.idx}">
                         </div>
@@ -202,16 +199,16 @@
                                 <img id="View" src="#" alt="이미지 미리보기" width="200px"
                                      height="300px"/>
                             </div>
-                            <input type='file' id="file" name="file"/>
+                            <input type='file' id="file2" name="file"/>
                         </div>
                         <div>
                             <div>
                                 <span class="font-weight-bold">제목<br></span><input
-                                    type="text" name="title" id="title" th:value="${content.title}">
+                                    type="text" name="title" id="title2" th:value="${content.title}">
                             </div>
                             <div>
                                 <span class="font-weight-bold">글내용<br></span>
-                                <textarea name="content" cols="30" rows="10" id="content" th:text="${content.content}"></textarea>
+                                <textarea name="content" cols="30" rows="10" id="content2" th:text="${content.content}"></textarea>
                             </div>
                             <button class="btn" type="button" onclick="BTN_REG2()">등록</button>
                             <a href="/home/show?page=0">
@@ -220,8 +217,8 @@
                                 </button>
                             </a>
                         </div>
-                    </form>
                 </th:block>
+                </form>
             </div>
         </article>
     </section>
