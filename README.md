@@ -2,8 +2,8 @@
 
 프로젝트명 : MySNS - 웹 게시판 서비스
 
-- 사용 언어 : JAVA
-- 사용 스택 : Thymleaf (템플릿 엔진), Spring-boot
+- 사용 언어 : JAVA, JAVASCRIPT, HTML5, CSS3
+- 사용 스택 : Thymleaf (템플릿 엔진), Spring-boot, JQUERY, BOOT-STRAP, AJAX 
 - 사용 DB : h2, Oracle
 
 * 기능 
