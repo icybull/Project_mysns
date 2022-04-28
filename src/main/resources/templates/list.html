@@ -37,7 +37,7 @@
 	<div class="wrap container">
 		<header>
 			<!-- action 속성 디폴트 값은 해당 페이지 호출할때와 같은 방식으로 처리 -->
-			<form action="" method="get" class="d-flex mb-4" id="frm">
+			<form action="/home/show" method="get" class="d-flex mb-4" id="frm">
 				<input type="hidden" id="page" name="page" value="0">
 				<div class="col-5">
 					<span class="display-4 font-weight-bold text-primary"><a href="/home/show?page=0" style="text-decoration: none;">KIMSTAGRAM</a></span>
@@ -47,7 +47,7 @@
 						<div class="input-group mb-2">
 							<input type="text" class="form-control" id="searchWord" name="searchWord">
 							<div class="input-group-append">
-								<button type="button" class="btn btn-secondary">검색</button>
+								<button type="submit" class="btn btn-secondary">검색</button>
 							</div>
 						</div>
 					</div>
@@ -58,7 +58,7 @@
 			<ul class="nav nav-fill h-100 align-items-center">
 				<li class="nav-item"><a href="/home/show?page=0" class="text-dark" style="text-decoration: none;">Home</a></li>
 				<li class="nav-item"><a href="/home/new" class="text-dark" style="text-decoration: none;">New</a></li>
-				<li class="nav-item"><a href="" class="text-dark" style="text-decoration: none;">Follow</a></li>
+				<li class="nav-item"><a href="/home/follow" class="text-dark" style="text-decoration: none;">Follow</a></li>
 				<li class="nav-item"><a href="/home/mypage" class="text-dark" style="text-decoration: none;">MyPage</a></li>
 			</ul>
 		</nav>

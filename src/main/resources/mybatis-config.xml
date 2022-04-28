@@ -6,6 +6,7 @@
     <typeAliases>
         <typeAlias type="com.example.mysns.member.domain.Member" alias="member"/>
         <typeAlias type="com.example.mysns.content.domain.Content" alias="content"/>
+        <typeAlias type="com.example.mysns.follow.domain.FollowDto" alias="follow"/>
     </typeAliases>
 </configuration>
 

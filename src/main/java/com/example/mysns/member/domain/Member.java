@@ -11,6 +11,16 @@ public class Member {
     private String pwd;
     private String address;
 
+    private boolean followed;
+
+
+    public boolean isFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(boolean followed) {
+        this.followed = followed;
+    }
 
     public String getProfileImg() {
         return profileImg;
@@ -71,11 +81,14 @@ public class Member {
     @Override
     public String toString() {
         return "Member{" +
-                "email='" + email + '\'' +
+                "id=" + id +
+                ", profileImg='" + profileImg + '\'' +
+                ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
                 ", nick='" + nick + '\'' +
                 ", pwd='" + pwd + '\'' +
                 ", address='" + address + '\'' +
+                ", followed=" + followed +
                 '}';
     }
 }

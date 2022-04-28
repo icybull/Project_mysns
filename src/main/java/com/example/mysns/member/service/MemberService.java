@@ -78,6 +78,10 @@ public class MemberService {
         return dataDao.selectOne(packageName+"getMyPageMember", member);
     }
 
+    public List<Member> selectAllMember(){
+        return dataDao.selectList(packageName+"selAllMember");
+    }
+
 
 
 }

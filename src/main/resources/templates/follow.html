@@ -74,19 +74,34 @@
             </div>
         </aside>
         <article style="height: 1000px;">
-            <!-- 프로필 사진, 이메일, 이름, 닉네임, 게시물 갯수, 팔로우 수, 팔로워 수, 내 컨텐츠  -->
-            <span th:text="${member.profileImg}"></span>
-            <span th:text="${member.email}"></span>
-            <span th:text="${member.name}"></span>
-            <span th:text="${member.nick}"></span>
-            <span th:text="'등록된 글 갯수 : ' + ${totalCnt}"></span>
-            <th:block th:each="content : ${contentList}">
-                <div>
-                    <span th:text="${content.img}"></span>
-                    <span th:text="${content.title}"></span>
-                    <span th:text="${content.content}"></span>
-                </div>
-            </th:block>
+            <table border="1">
+                <thead>
+                <tr>
+                    <th>사진</th>
+                    <th>닉네임-이름</th>
+                    <th>버튼</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="member : ${memberList}">
+                    <th:block th:if="${member.id} == ${myId}">
+                        <td th:text="${member.profileImg}"></td>
+                        <td th:text="${member.nick} + '-' + ${member.name}"></td>
+                        <td><button class="btn" disabled>팔로우 불가</button></td>
+                    </th:block>
+                    <th:block th:unless="${member.id} == ${myId}">
+                        <td th:text="${member.profileImg}"></td>
+                        <td th:text="${member.nick} + '-' + ${member.name}"></td>
+                        <td th:if="${member.followed}">
+                            <button class="btn"><a th:href="@{/home/follow/del(follower=${member.id})}">팔로우 취소</a></button>
+                        </td>
+                        <td th:unless="${member.followed}">
+                            <button class="btn"><a th:href="@{/home/follow/ins(follower=${member.id})}">팔로우</a></button>
+                        </td>
+                    </th:block>
+                </tr>
+                </tbody>
+            </table>
 
 
 

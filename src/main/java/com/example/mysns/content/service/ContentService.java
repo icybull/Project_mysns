@@ -61,6 +61,12 @@ public class ContentService {
         return list;
     }
 
+    //마이 페이지 갯수 리턴
+    public int getTotalCnt(int myId){
+        Content content = new Content();
+        content.setM_id(myId);
+        return dataDao.selectOne(packageName+"contentCnt", content);
+    }
     // 총 페이지 숫자 리턴
     public int selPageNum(){
         int preCount = dataDao.selectOne(packageName+"contentCnt");
@@ -73,6 +79,10 @@ public class ContentService {
         return pageCnt;
     }
 
+
+
+
+
     // 컨텐츠 추가
     public ResponseEntity<?> insContent(Content content, Part file, String path) {
         try {
@@ -81,39 +91,58 @@ public class ContentService {
             fileName = uuid.toString() + "_" + fileName;
             content.setImg(fileName);
             dataDao.insert(packageName + "insContent", content);
-            InputStream inputStream = file.getInputStream();
-            File tempFile = new File(path);
-            if (!tempFile.exists()) {
-                tempFile.mkdirs();
-            }
-            FileOutputStream fileOutputStream = new FileOutputStream(path + File.separator + fileName);
-            System.out.println(path + File.separator + fileName);
-            int size = 0;
-            byte[] buffer = new byte[1024];
-            while ((size = inputStream.read(buffer)) != -1) {
-                fileOutputStream.write(buffer, 0, size);
-            }
-            if (inputStream != null){
-                inputStream.close();
-            }
-            if(fileOutputStream != null){
-                fileOutputStream.close();
-            }
+            fileUpload(file, fileName, path);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             return new ResponseEntity("ok", HttpStatus.OK);
         }
     }
-
     // 바꿀 컨텐츠
     public Content preContent(Content content){
         return dataDao.selectOne(packageName+"modifyContent",content);
     }
     // 바뀌는 컨텐츠
     public ResponseEntity<?> updContent(Content content, Part file, String path){
-        return new ResponseEntity("", HttpStatus.OK);
+        try{
+            if(file.getSize() > 0){
+                String fileName = file.getSubmittedFileName();
+                UUID uuid = UUID.randomUUID();
+                fileName = uuid.toString() + "_" + fileName;
+                content.setImg(fileName);
+                fileUpload(file, fileName, path);
+            }
+            dataDao.update(packageName+"updContent", content);
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally {
+            return new ResponseEntity("ok", HttpStatus.OK);
+        }
     }
+    private void fileUpload(Part file,String fileName, String path) throws IOException{
+        InputStream inputStream = file.getInputStream();
+        File tempFile = new File(path);
+        if (!tempFile.exists()) {
+            tempFile.mkdirs();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(path + File.separator + fileName);
+        System.out.println(path + File.separator + fileName);
+        int size = 0;
+        byte[] buffer = new byte[1024];
+        while ((size = inputStream.read(buffer)) != -1) {
+            fileOutputStream.write(buffer, 0, size);
+        }
+        if (inputStream != null){
+            inputStream.close();
+        }
+        if(fileOutputStream != null){
+            fileOutputStream.close();
+        }
+    }
+
+
+
+
     // 컨텐츠 삭제
     public int deleteContent(Content content){
         return dataDao.delete(packageName+"deleteContent",content);

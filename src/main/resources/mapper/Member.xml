@@ -27,6 +27,7 @@
     <insert id="insMember" parameterType="member">
         INSERT INTO MEMBER
         (
+         PROFILEIMG,
          EMAIL,
          NAME,
          NICK,
@@ -35,6 +36,7 @@
         )
         VALUES
         (
+         'white.png',
          #{email},
          #{name},
          #{nick},
