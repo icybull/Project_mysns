@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>MySNS</title>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+
+        function edit(){
+            if($('#obj').val() == '비밀번호'){
+                if($('#oldObj').val() == null || $('#oldObj').val() == ''){
+                    alert('이전 비밀번호를 입력하세요');
+                    return;
+                }
+                if($('#newObj').val() == null || $('#newObj').val() == ''){
+                    alert('새로운 비밀번호를 입력하세요.');
+                    return;
+                }
+            } else {
+                if($('#oldObj').val() == null || $('#oldObj').val() == ''){
+                    alert('이전 값을 입력하세요');
+                    return;
+                }
+                if($('#newObj').val() == null || $('#newObj').val() == ''){
+                    alert('새로운 값을 입력하세요');
+                    return;
+                }
+            }
+            if(confirm('변경 하시겠습니까?')){
+                let params = $('#frm').serialize();
+                $.ajax({
+                    url :"/home/profileEditPopUp/edit",
+                    data : params,
+                    datatype : 'text',
+                    type : "POST",
+                    success : function(result){
+                        if(result == 'notPwd'){
+                            alert('비밀번호가 일치 하지 않습니다.');
+                        } else if(result == 'notEmail'){
+                            alert('기존의 이메일이 맞지 않습니다.');
+                        } else if(result == 'notNick'){
+                            alert('기존의 닉네임이 맞지 않습니다.');
+                        } else {
+                            alert('변경 완료되었습니다.');
+                            opener.parent.location.reload();
+                            window.close();
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<form id="frm" method="post" action="">
+    <input type="hidden" id="obj" name="obj" th:value="${obj}"/>
+    <h2 th:text="${obj} + ' 변경'"></h2>
+    <div th:if="${obj} == '비밀번호'">
+        <h4 th:text="${oldObj}"></h4>
+        <input type="password" id="oldObj" name="oldObj"/>
+    </div>
+    <div th:unless="${obj} == '비밀번호'">
+        <h4 th:text="${oldObj}"></h4>
+        <input type="text" id="oldObj" name="oldObj"/>
+    </div>
+
+
+
+    <div th:if="${obj} == '비밀번호'">
+        <h4 th:text="${newObj}"></h4>
+        <input type="password" id="newObj" name="newObj"/>
+    </div>
+    <div th:unless="${obj} == '비밀번호'">
+        <h4 th:text="${newObj}"></h4>
+        <input type="text" id="newObj" name="newObj"/>
+    </div>
+    <div><button type="button" class="btn btn-secondary" onclick="edit()">변경</button></div>
+</form>
+</body>
+</html>

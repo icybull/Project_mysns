@@ -13,6 +13,35 @@ public class Member {
 
     private boolean followed;
 
+    //프로필변경
+    private String obj;
+    private String oldObj;
+    private String newObj;
+
+
+    public String getObj() {
+        return obj;
+    }
+
+    public void setObj(String obj) {
+        this.obj = obj;
+    }
+
+    public String getOldObj() {
+        return oldObj;
+    }
+
+    public void setOldObj(String oldObj) {
+        this.oldObj = oldObj;
+    }
+
+    public String getNewObj() {
+        return newObj;
+    }
+
+    public void setNewObj(String newObj) {
+        this.newObj = newObj;
+    }
 
     public boolean isFollowed() {
         return followed;

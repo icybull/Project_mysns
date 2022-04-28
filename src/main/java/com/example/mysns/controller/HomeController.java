@@ -211,4 +211,71 @@ public class HomeController {
         logger.info(" >>>>>>> end deleteFollow");
         return "redirect:/home/follow";
     }
+
+    @GetMapping("/profile")
+    public String profile(HttpSession session,Model model){
+        String nick = String.valueOf(session.getAttribute("nick"));
+        String name = String.valueOf(session.getAttribute("name"));
+        if(nick.equals("") || nick == null || name.equals("") || name == null || session.getAttribute("id") == null){
+            return "redirect:/";
+        }
+        int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
+        model.addAttribute("nick",nick);
+        model.addAttribute("name",session.getAttribute("name"));
+        Member member = memberService.getMemberById(myId);
+        System.out.println(member);
+        model.addAttribute("member", member);
+        return "profile";
+    }
+    @GetMapping("/profileEditPopUp")
+    public String profileEditPopUp(Model model, @RequestParam("obj") String obj){
+        String oldObj = "";
+        String newObj = "";
+        if(obj.equals("비밀번호")){
+            oldObj = "새로운 비밀번호";
+            newObj = "새로운 비밀번호 확인";
+        } else {
+            oldObj = "이전 " + obj;
+            newObj = "새로운 " + obj;
+        }
+        model.addAttribute("obj", obj);
+        model.addAttribute("oldObj", oldObj);
+        model.addAttribute("newObj", newObj);
+        return "profileEditPopUp";
+    }
+    @ResponseBody
+    @PostMapping("/profileEditPopUp/edit")
+    public String editProfile(HttpSession session, Member member){
+        List<Member> memberList = null;
+        int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
+        member.setId(myId);
+
+        String obj = member.getObj();
+        if(obj.equals("이메일")){
+            member.setEmail(member.getOldObj());
+            memberList = memberService.findByEmail(member);
+            if(memberList.size() > 0){
+                memberService.updEmail(member);
+                return "ok";
+            } else{
+                return "notEmail";
+            }
+        } else if(obj.equals("닉네임")){
+            member.setNick(member.getOldObj());
+            memberList = memberService.findByNick(member);
+            if(memberList.size() > 0){
+                memberService.updNick(member);
+                return "ok";
+            } else{
+                return "notNick";
+            }
+        } else { //비밀번호
+            if(!member.getOldObj().equals(member.getNewObj())){
+                return "notPwd";
+            } else {
+                memberService.updPwd(member);
+                return "ok";
+            }
+        }
+    }
 }

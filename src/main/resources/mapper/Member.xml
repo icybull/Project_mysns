@@ -8,21 +8,47 @@
         FROM MEMBER
     </select>
 
-    <select id="selMember" resultType="member">
-
+    <select id="findById"  parameterType="member" resultType="member">
+        SELECT *
+        FROM MEMBER
+        WHERE ID = #{id}
     </select>
 
     <select id="findByEmail" parameterType="member" resultType="member">
         SELECT *
         FROM MEMBER
         WHERE EMAIL = #{email}
+          <if test="id != 0">
+              AND ID = #{id}
+          </if>
     </select>
 
     <select id="findByNick" parameterType="member" resultType="member">
         SELECT *
         FROM MEMBER
         WHERE NICK = #{nick}
+        <if test="id != 0">
+            AND ID = #{id}
+        </if>
     </select>
+
+    <update id="updEmail" parameterType="member">
+        UPDATE MEMBER
+        SET EMAIL = #{newObj}
+        WHERE ID = #{id}
+    </update>
+    <update id="updNick" parameterType="member">
+        UPDATE MEMBER
+        SET NICK = #{newObj}
+        WHERE ID = #{id}
+    </update>
+    <update id="updPwd" parameterType="member">
+        UPDATE MEMBER
+        SET PWD = #{pwd}
+        WHERE ID = #{id}
+    </update>
+
+
 
     <insert id="insMember" parameterType="member">
         INSERT INTO MEMBER

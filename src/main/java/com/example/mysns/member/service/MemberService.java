@@ -5,19 +5,15 @@ import com.example.mysns.member.domain.Member;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Base64;
+
 import java.util.List;
 
 
@@ -82,6 +78,27 @@ public class MemberService {
         return dataDao.selectList(packageName+"selAllMember");
     }
 
-
+    public Member getMemberById(int myId){
+        Member member = new Member();
+        member.setId(myId);
+        return dataDao.selectOne(packageName+"findById", member);
+    }
+    public List<Member> findByEmail(Member member){
+        return dataDao.selectList(packageName+"findByEmail", member);
+    }
+    public List<Member> findByNick(Member member){
+        return dataDao.selectList(packageName+"findByNick", member);
+    }
+    public int updEmail(Member member){
+        return dataDao.update(packageName+"updEmail",member);
+    }
+    public int updNick(Member member){
+        return dataDao.update(packageName+"updNick",member);
+    }
+    public int updPwd(Member member){
+        String encodedPassword = passwordEncoder.encode(member.getOldObj());
+        member.setPwd(encodedPassword);
+        return dataDao.update(packageName+"updPwd",member);
+    }
 
 }

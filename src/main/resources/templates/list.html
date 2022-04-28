@@ -70,7 +70,10 @@
 						안녕하세요 <br th:text="${nick}+'('+${name}+')님'">
 					</h5>
 					<br>
-					<button class="btn" type="button" onclick="logOut()">Logout</button>
+					<div class="d-flex">
+						<button class="btn" type="button" onclick="logOut()">Logout</button>
+						<a href="/home/profile"><button class="btn" type="button">프로필</button></a>
+					</div>
 				</div>
 			</aside>
 			<article style="height: 1000px;">

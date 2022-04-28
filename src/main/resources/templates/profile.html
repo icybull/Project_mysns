@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head>
+    <title>MySNS</title>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
+    <meta name="_csrf" content="${_csrf.token}" />
+    <link rel="stylesheet" type="text/css" href="/css/list.css">
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        function popUp(){
+            let obj = $("#editObj").val();
+            let url = "/home/profileEditPopUp?obj=" + obj;
+            let name = "editPopUp";
+            let option = "width = 500, height = 500, top = 100, left = 200, location = no";
+            window.open(url,name,option);
+        }
+        function editEmail(){
+            $("#editObj").val("이메일");
+            popUp();
+        }
+        function editNick(){
+            $("#editObj").val("닉네임");
+            popUp();
+        }
+        function editPwd(){
+            $("#editObj").val("비밀번호");
+            popUp();
+        }
+    </script>
+</head>
+<body>
+    <input type="hidden" id="editObj" name="editObj" value="">
+    <div>
+        <h4 th:text="${member.email}"></h4>
+        <button type="button" class="btn btn-primary" onclick="editEmail()">이메일 수정</button>
+    </div>
+    <div>
+        <h4 th:text="${member.nick}"></h4>
+        <button type="button" class="btn btn-primary" onclick="editNick()">닉네임 수정</button>
+    </div>
+    <div>
+        <h4>**********</h4>
+        <button type="button" class="btn btn-primary" onclick="editPwd()">비밀번호 변경</button>
+    </div>
+</body>
+</html>
