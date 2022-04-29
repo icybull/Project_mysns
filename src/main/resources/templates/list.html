@@ -25,69 +25,83 @@
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
 			crossorigin="anonymous"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
 	<script src="/js/common.js"></script>
 	<script type="text/javascript">
 	</script>
 </head>
 <body>
-	<div class="wrap container">
+	<div class="wrap" style="width: 1500px">
 		<header>
 			<!-- action 속성 디폴트 값은 해당 페이지 호출할때와 같은 방식으로 처리 -->
 			<form action="/home/show" method="get" class="d-flex mb-4" id="frm">
 				<input type="hidden" id="page" name="page" value="0">
-				<div class="col-5">
-					<span class="display-4 font-weight-bold text-primary"><a href="/home/show?page=0" style="text-decoration: none;">KIMSTAGRAM</a></span>
+				<div class="col-4">
+					<span class="display-4 font-weight-bold"><a href="/home/show?page=0" class="text-secondary" style="text-decoration: none;">KIMSTAGRAM</a></span>
 				</div>
-				<div class="col-7">
-					<div class="h-100 d-flex align-items-center">
+				<div class="col-6">
+					<div class="h-100 d-flex align-items-end">
 						<div class="input-group mb-2">
 							<input type="text" class="form-control" id="searchWord" name="searchWord">
 							<div class="input-group-append">
-								<button type="submit" class="btn btn-secondary">검색</button>
+								<button type="submit" class="btn btn-secondary font_style">검색</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
 		</header>
-		<nav class="bg-primary">
+
+
+		<nav class="bg-secondary" style="border-radius: 5px;">
 			<ul class="nav nav-fill h-100 align-items-center">
-				<li class="nav-item"><a href="/home/show?page=0" class="text-dark" style="text-decoration: none;">Home</a></li>
-				<li class="nav-item"><a href="/home/new" class="text-dark" style="text-decoration: none;">New</a></li>
-				<li class="nav-item"><a href="/home/follow" class="text-dark" style="text-decoration: none;">Follow</a></li>
-				<li class="nav-item"><a href="/home/mypage" class="text-dark" style="text-decoration: none;">MyPage</a></li>
+				<li class="nav-item"><a href="/home/show?page=0" class="text-light font_style" style="text-decoration: none;">Home</a></li>
+				<li class="nav-item"><a href="/home/new" class="text-light font_style" style="text-decoration: none;">New</a></li>
+				<li class="nav-item"><a href="/home/follow" class="text-light font_style" style="text-decoration: none;">Follow</a></li>
+				<li class="nav-item"><a href="/home/mypage" class="text-light font_style" style="text-decoration: none;">MyPage</a></li>
 			</ul>
 		</nav>
 		<section class="d-flex">
 			<aside>
-				<div class="bg-warning"
-					style="width: 150px; height: 150px; border-radius: 5px;">
-					<h5>
-						안녕하세요 <br th:text="${nick}+'('+${name}+')님'">
+				<div class="bg-secondary mt-3 p-3"
+					style="width: 250px; height: 450px; border-radius: 5px; margin-right: 30px">
+					<h5 class="font_style mb-4">
+						안녕하세요<br th:text="${nick}+'('+${name}+')님'">
 					</h5>
-					<br>
+					<img src="/img/facebook.png" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-5">
 					<div class="d-flex">
-						<button class="btn" type="button" onclick="logOut()">Logout</button>
-						<a href="/home/profile"><button class="btn" type="button">프로필</button></a>
+						<a href="/home/profile"><button class="btn font_style" type="button" style="width: 130px;">Profile</button></a>
+						<button class="ml-2 btn font_style" type="button" onclick="logOut()" style="width: 80px;">Logout</button>
 					</div>
 				</div>
 			</aside>
-			<article style="height: 1000px;">
-				<div class="bg-warning p-2 wrap flex-wrap d-flex justify-content-between">
-						<div th:each="cd : ${cdArr}">
-							<h6 th:text="${cd.title}"></h6>
-							<img th:src="'/upload/'+ ${cd.img}" alt="게시글 사진" style="width: 200px; height:300px">
-							<h6 th:text="${cd.nick}+' - '+${cd.content}"></h6>
+
+
+
+
+
+
+
+			<article style="width: 1200px; height: 1100px">
+				<div class="p-2 wrap flex-wrap d-flex justify-content-between">
+						<div th:each="cd : ${cdArr}" class="p-2 mt-3 font_style" style="border: 5px solid #bcbcbc;">
+							<h6 style="font-size: x-large; font-weight: bold; display:block; white-space : nowrap; width: 220px; overflow: hidden; text-overflow:ellipsis;"
+								class="mb-2" th:text="'● ' +${cd.title}"></h6>
+							<img th:src="'/upload/'+ ${cd.img}" alt="게시글 사진" style="width: 255px; height:300px; border: 2px solid #bcbcbc;">
+							<h6 th:text="'● ' +${cd.nick}"></h6>
+							<h6 th:text="'- '+${cd.content}" style="display:block; white-space : nowrap; width: 220px; overflow: hidden; text-overflow:ellipsis;"></h6>
 							<div th:if="${cd.mine}">
 								<input type="hidden" id="idx" name="idx" th:value="${cd.idx}" />
 								<a th:href="@{/home/modify(idx=${cd.idx})}"><button
-										class="btn" style="width: 90px;">수정</button></a>
+										class="btn" style="width: 120px; height: 35px;">수정</button></a>
 								<a th:href="@{/home/delete(idx=${cd.idx})}"><button
-										class="btn" style="width: 90px; margin-left: 10px">삭제</button></a>
+										class="btn" style="width: 120px; height: 35px; margin-left: 10px">삭제</button></a>
 							</div>
 							<div th:unless="${cd.mine}">
-								<button class="btn" style="width: 90px;" disabled>수정</button>
-								<button class="btn" style="width: 90px; margin-left: 10px;"
+								<button class="btn" style="width: 120px; height: 35px;" disabled>수정</button>
+								<button class="btn" style="width: 120px; height: 35px; margin-left: 10px;"
 										disabled>삭제</button>
 							</div>
 						</div>
@@ -99,10 +113,10 @@
 
 						<div th:if="${page>0}">
 							<th:block th:if="${searchWord} == null">
-								<li class="ml-2"><a th:href="@{/home/show(page=${page-1})}">◁</a></li>
+								<li class="ml-2"><a style="text-decoration: none" class="text-dark" th:href="@{/home/show(page=${page-1})}">◁</a></li>
 							</th:block>
 							<th:block th:unless="${searchWord} == null">
-								<li class="ml-2"><a th:href="@{/home/show(page=${page-1},searchWord=${searchWord})}">◁</a></li>
+								<li class="ml-2"><a style="text-decoration: none" class="text-dark" th:href="@{/home/show(page=${page-1},searchWord=${searchWord})}">◁</a></li>
 							</th:block>
 						</div>
 
@@ -112,16 +126,16 @@
 							<div th:if="${i+startPage+1<=pageCnt+1}">
 								<div th:if="${page == i+startPage}">
 									<th:block th:if="${searchWord} == null">
-									<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage})}"
-														class="font-weight-bold" th:text="${i+startPage+1}"></a></li>
+									<li class="ml-2"><a style="text-decoration: none" th:href="@{/home/show(page=${i+startPage})}"
+														class="font-weight-bold text-dark" th:text="${i+startPage+1}"></a></li>
 									</th:block>
 									<th:block th:unless="${searchWord} == null">
-										<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage},searchWord=${searchWord})}"
-															class="font-weight-bold" th:text="${i+startPage+1}"></a></li>
+										<li class="ml-2"><a style="text-decoration: none" th:href="@{/home/show(page=${i+startPage},searchWord=${searchWord})}"
+															class="font-weight-bold text-dark" th:text="${i+startPage+1}"></a></li>
 									</th:block>
 								</div>
 								<div th:unless="${page == i+startPage}">
-									<li class="ml-2"><a th:href="@{/home/show(page=${i+startPage})}" th:text="${i+startPage+1}"></a></li>
+									<li class="ml-2"><a style="text-decoration: none" class="text-dark" th:href="@{/home/show(page=${i+startPage})}" th:text="${i+startPage+1}"></a></li>
 								</div>
 							</div>
 						</th:block>
@@ -130,10 +144,10 @@
 
 						<div th:if="${page<pageCnt}">
 							<th:block th:if="${searchWord} == null">
-								<li class="ml-2"><a th:href="@{/home/show(page=${page+1})}">▷</a></li>
+								<li class="ml-2"><a style="text-decoration: none"class="text-dark" th:href="@{/home/show(page=${page+1})}">▷</a></li>
 							</th:block>
 							<th:block th:unless="${searchWord} == null">
-								<li class="ml-2"><a th:href="@{/home/show(page=${page+1},searchWord=${searchWord})}">▷</a></li>
+								<li class="ml-2"><a style="text-decoration: none" class="text-dark" th:href="@{/home/show(page=${page+1},searchWord=${searchWord})}">▷</a></li>
 							</th:block>
 						</div>
 

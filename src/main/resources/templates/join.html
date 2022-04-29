@@ -1,5 +1,10 @@
+<!DOCTYPE html>
+<html>
 <head>
     <title>회원가입</title>
+    <meta charset="UTF-8">
+    <meta name="_csrf_header" content="${_csrf.headerName}" />
+    <meta name="_csrf" content="${_csrf.token}" />
     <style>
         .f_size {
             font-size: 20px;
@@ -25,6 +30,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
     <script type="text/javascript" >
         function BTN_REG(){
             if($("#email").val() == "" || $("#email").val() == null){
@@ -88,20 +96,13 @@
 </head>
 <body>
 <header class="d-flex justify-content-center mt-5">
-    <h2><a href="/">KIMSTAGRAM</a></h2>
+    <h2><a href="/" class="text-secondary" style="text-decoration: none">KIMSTAGRAM</a></h2>
 </header>
 <section class="d-flex justify-content-center" style="height: 900px;">
     <section>
-        <button class="btn btn-primary mt-4"
-                style="width: 500px; height: 50px;">
-            <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRifhBwWgV_xNLjFzJFkzg1XExdYGqAwxHKEw&usqp=CAU"
-                    alt="페이스북 로고" width="40px" height="40px" class="mr-1">Facebook으로
-            로그인
-        </button>
         <form action="" id="frm" method="post">
             <section class="mt-4">
-                <span class="font-weight-bold f_size">이메일 주소<br></span> <input
+                <span class="font-weight-bold f_size">E-mail<br></span> <input
                     type="text" style="width: 500px; height: 50px;" name="email"
                     class="f_size" placeholder="  이메일 주소" id="email">
             </section>
@@ -116,13 +117,13 @@
                     class="f_size" placeholder="  사용자 이름" id="nick">
             </section>
             <section class="mt-4">
-                <span class="font-weight-bold f_size">PASSWORD<br></span> <input
+                <span class="font-weight-bold f_size">Password<br></span> <input
                     type="password" style="width: 500px; height: 50px;"
                     name="pwd" class="f_size" id="pwd1"
                     placeholder="  비밀번호">
             </section>
             <section class="mt-4">
-                <span class="font-weight-bold f_size">PASSWORD 확인<br></span> <input
+                <span class="font-weight-bold f_size">Password 확인<br></span> <input
                     type="password" style="width: 500px; height: 50px;"
                     name="pwd2" class="f_size" id="pwd2"
                     placeholder="  비밀번호 확인">
@@ -133,9 +134,13 @@
                     name="address" class="f_size" id="address"
                     placeholder="  비밀번호 확인">
             </section>
-            <input type="button" class="btn btn-primary mt-5 f_size" onclick="BTN_REG()"
+            <input type="button" class="btn btn-secondary mt-5 f_size" onclick="BTN_REG()"
                    style="width: 500px; height: 50px;" id="join" value="가입하기">
         </form>
+        <button class="btn btn-secondary mt-4"
+                style="width: 500px; height: 50px;">
+            <img src="/img/facebook.png" alt="페이스북 로고" width="40px" height="40px" class="mr-3">페이스북으로 로그인
+        </button>
     </section>
 </section>
 </body>

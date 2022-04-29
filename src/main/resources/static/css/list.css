@@ -3,7 +3,6 @@
 }
 
 .wrap {
-    width: 900px;
     margin: auto;
 }
 
@@ -23,4 +22,9 @@ nav>ul>li {
     font-size: medium;
     font-weight: bold;
 }
-
+*{
+    font-family: 'Gowun Dodum', sans-serif;
+}
+.font_style{
+    font-weight: bold;
+}
