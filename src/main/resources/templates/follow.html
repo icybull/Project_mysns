@@ -72,7 +72,7 @@
                 <h5 class="font_style mb-2">
                     안녕하세요<br th:text="${nick}+'('+${name}+')님'">
                 </h5>
-                <img src="/img/facebook.png" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-4">
+                <img th:src="'/upload/'+${profileImg}" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-4">
                 <div class="d-flex">
                     <a href="/home/profile"><button class="btn font_style" type="button" style="width: 130px;">Profile</button></a>
                     <button class="ml-2 btn font_style" type="button" onclick="logOut()" style="width: 80px;">Logout</button>

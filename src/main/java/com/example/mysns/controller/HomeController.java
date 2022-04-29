@@ -53,6 +53,8 @@ public class HomeController {
         if(nick.equals("") || nick == null || name.equals("") || name == null || session.getAttribute("id") == null){
             return "redirect:/";
         }
+        String profileImg = String.valueOf(session.getAttribute("profileImg"));
+        model.addAttribute("profileImg", profileImg);
         model.addAttribute("nick",nick);
         model.addAttribute("name",session.getAttribute("name"));
         return "new";
@@ -63,17 +65,13 @@ public class HomeController {
     @PostMapping("/new")
     public ResponseEntity<?> insContent(HttpServletRequest request, Content content, @RequestParam("file") Part file ) {
         logger.info(" >>>>>>> start insertContent");
-        if(file.getSize() == 0){
-            return new ResponseEntity("notFile", HttpStatus.OK);
-        } else {
-            HttpSession session = request.getSession();
-            content.setM_id(Integer.parseInt(String.valueOf(session.getAttribute("id"))));
-            String path = request.getServletContext().getRealPath("/upload");
-            System.out.println(path);
-            ResponseEntity result = contentService.insContent(content,file,path);
-            logger.info(" >>>>>>> end insertContent");
-            return result;
-        }
+        HttpSession session = request.getSession();
+        content.setM_id(Integer.parseInt(String.valueOf(session.getAttribute("id"))));
+        String path = request.getServletContext().getRealPath("/upload");
+        System.out.println(path);
+        ResponseEntity result = contentService.insContent(content,file,path);
+        logger.info(" >>>>>>> end insertContent");
+        return result;
     }
 
 
@@ -90,6 +88,8 @@ public class HomeController {
         model.addAttribute("nick", nick);
         model.addAttribute("name", name);
         int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
+        String profileImg = String.valueOf(session.getAttribute("profileImg"));
+        model.addAttribute("profileImg", profileImg);
         model.addAttribute("page",page);
 
         List<Content> cdArr = null;
@@ -135,6 +135,8 @@ public class HomeController {
         if(nick.equals("") || nick == null || name.equals("") || name == null || session.getAttribute("id") == null){
             return "redirect:/";
         }
+        String profileImg = String.valueOf(session.getAttribute("profileImg"));
+        model.addAttribute("profileImg", profileImg);
         model.addAttribute("nick",nick);
         model.addAttribute("name",session.getAttribute("name"));
         Content resultContent = contentService.preContent(content);
@@ -163,6 +165,8 @@ public class HomeController {
         model.addAttribute("nick", nick);
         model.addAttribute("name", name);
         int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
+        String profileImg = String.valueOf(session.getAttribute("profileImg"));
+        model.addAttribute("profileImg", profileImg);
         Member member = memberService.getMyPageMember(myId);
         List<Content> contentList = contentService.getMyPageContents(myId);
         int totalCnt = contentService.getTotalCnt(myId);
@@ -180,9 +184,11 @@ public class HomeController {
             return "redirect:/";
         }
         int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
-        model.addAttribute("nick",nick);
-        model.addAttribute("name",session.getAttribute("name"));
-        model.addAttribute("myId",myId);
+        String profileImg = String.valueOf(session.getAttribute("profileImg"));
+        model.addAttribute("profileImg", profileImg);
+        model.addAttribute("nick", nick);
+        model.addAttribute("name", name);
+        model.addAttribute("myId", myId);
         List<Member> memberList = memberService.selectAllMember();
         for(Member member : memberList){
             int isFollowed = followService.chkFollow(myId, member.getId());
@@ -220,8 +226,10 @@ public class HomeController {
             return "redirect:/";
         }
         int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
-        model.addAttribute("nick",nick);
-        model.addAttribute("name",session.getAttribute("name"));
+        String profileImg = String.valueOf(session.getAttribute("profileImg"));
+        model.addAttribute("profileImg", profileImg);
+        model.addAttribute("nick", nick);
+        model.addAttribute("name", name);
         Member member = memberService.getMemberById(myId);
         System.out.println(member);
         model.addAttribute("member", member);

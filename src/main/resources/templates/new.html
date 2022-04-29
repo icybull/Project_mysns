@@ -42,6 +42,19 @@
                 alert("내용을 입력해주세요.");
                 return;
             }
+            let isFile = document.getElementById("file").value;
+            if(isFile){
+                let fileChk = document.getElementById("file").files[0].name;
+                let fileExt = fileChk.split(".");
+                if(fileExt[1] != 'png' && fileExt[1] != 'jpg' && fileExt[1] != 'webp'){
+                    alert('이미지 파일 확장자가 아닙니다. \r jpg, png, webp 파일만 업로드 가능합니다.');
+                    return;
+                }
+            } else {
+                alert('이미지 파일이 존재 하지 않습니다.');
+                return;
+            }
+
             if(confirm('등록하시겠습니까?')){
                 let form = $('#frm')[0];
                 let params = new FormData(form);
@@ -54,12 +67,8 @@
                     processData: false,
                     contentType: false,
                     success : function(result){
-                        if(result == 'notFile'){
-                            alert('이미지 파일이 존재 하지 않습니다.');
-                        } else {
-                            alert('저장 완료되었습니다.');
-                            location.href="/home/show?page=0";
-                        }
+                        alert('저장 완료되었습니다.');
+                        location.href="/home/show?page=0";
                     }
                 });
             }
@@ -75,6 +84,15 @@
                 alert("내용을 입력해주세요.");
                 return;
             }
+            let isFile = document.getElementById("file").value;
+            if(isFile){
+                let fileChk = document.getElementById("file").files[0].name;
+                let fileExt = fileChk.split(".");
+                if(fileExt[1] != 'png' && fileExt[1] != 'jpg' && fileExt[1] != 'webp'){
+                    alert('이미지 파일 확장자가 아닙니다. \r jpg, png, webp 파일만 업로드 가능합니다.');
+                    return;
+                }
+            }
             if(confirm('수정하시겠습니까?')){
                 let form = $('#frm')[0];
                 let params = new FormData(form);
@@ -87,12 +105,8 @@
                     processData: false,
                     contentType: false,
                     success : function(result){
-                        if(result == 'notFile'){
-                            alert('이미지 파일이 존재 하지 않습니다.');
-                        } else {
-                            alert('수정 완료되었습니다.');
-                            location.href="/home/show?page=0";
-                        }
+                        alert('수정 완료되었습니다.');
+                        location.href="/home/show?page=0";
                     }
                 });
             }
@@ -103,7 +117,7 @@
 <div class="wrap" style="width: 1500px">
     <header>
         <!-- action 속성 디폴트 값은 해당 페이지 호출할때와 같은 방식으로 처리 -->
-        <form action="/home/show" method="get" class="d-flex mb-4" id="frm">
+        <form action="/home/show" method="get" class="d-flex mb-4">
             <input type="hidden" id="page" name="page" value="0">
             <div class="col-4">
                 <span class="display-4 font-weight-bold"><a href="/home/show?page=0" class="text-secondary" style="text-decoration: none;">KIMSTAGRAM</a></span>
@@ -137,7 +151,7 @@
                 <h5 class="font_style mb-2">
                     안녕하세요<br th:text="${nick}+'('+${name}+')님'">
                 </h5>
-                <img src="/img/facebook.png" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-4">
+                <img th:src="'/upload/'+${profileImg}" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-4">
                 <div class="d-flex">
                     <a href="/home/profile"><button class="btn font_style" type="button" style="width: 130px;">Profile</button></a>
                     <button class="ml-2 btn font_style" type="button" onclick="logOut()" style="width: 80px;">Logout</button>

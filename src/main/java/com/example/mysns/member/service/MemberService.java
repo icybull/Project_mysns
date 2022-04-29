@@ -52,16 +52,16 @@ public class MemberService {
     // 이메일, 비밀번호 일치 체크 후 로그인
     public String chkMemberLogin(HttpServletRequest request, Member member){
         HttpSession session = request.getSession();
-        logger.debug("findByEmail > ::::::::::::::::::::::::");
+        logger.info("findByEmail > ::::::::::::::::::::::::");
 
         List<Member> list = dataDao.selectList(packageName+"findByEmail", member);
         if(list.size() == 0){
             return "notEmail";
         }
-        System.out.println(list.size()+" //// "+ list.get(0));
         if(!passwordEncoder.matches(member.getPwd(), list.get(0).getPwd())){
             return "notPwd";
         }
+        session.setAttribute("profileImg", list.get(0).getProfileImg());
         session.setAttribute("id",list.get(0).getId());
         session.setAttribute("name", list.get(0).getName());
         session.setAttribute("nick", list.get(0).getNick());

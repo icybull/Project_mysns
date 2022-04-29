@@ -25,6 +25,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
             crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
     <script type="text/javascript">
 
         function edit(){
@@ -73,29 +76,29 @@
     </script>
 </head>
 <body>
-<form id="frm" method="post" action="">
+<form  class="mt-3" style="margin-left: 80px" id="frm" method="post" action="">
     <input type="hidden" id="obj" name="obj" th:value="${obj}"/>
-    <h2 th:text="${obj} + ' 변경'"></h2>
+    <h2 th:text="'● '+${obj} + ' 변경'" class="mb-3"></h2>
     <div th:if="${obj} == '비밀번호'">
         <h4 th:text="${oldObj}"></h4>
-        <input type="password" id="oldObj" name="oldObj"/>
+        <input type="password" id="oldObj" name="oldObj" style="width: 230px;"/>
     </div>
     <div th:unless="${obj} == '비밀번호'">
         <h4 th:text="${oldObj}"></h4>
-        <input type="text" id="oldObj" name="oldObj"/>
+        <input type="text" id="oldObj" name="oldObj" style="width: 230px;"/>
     </div>
 
 
 
-    <div th:if="${obj} == '비밀번호'">
+    <div th:if="${obj} == '비밀번호'" class="mt-3">
         <h4 th:text="${newObj}"></h4>
-        <input type="password" id="newObj" name="newObj"/>
+        <input type="password" id="newObj" name="newObj" style="width: 230px;"/>
     </div>
-    <div th:unless="${obj} == '비밀번호'">
+    <div th:unless="${obj} == '비밀번호'" class="mt-3">
         <h4 th:text="${newObj}"></h4>
-        <input type="text" id="newObj" name="newObj"/>
+        <input type="text" id="newObj" name="newObj" style="width: 230px;"/>
     </div>
-    <div><button type="button" class="btn btn-secondary" onclick="edit()">변경</button></div>
+    <div><button type="button" class="btn btn-secondary" style="width: 230px; margin-top: 50px" onclick="edit()">변경</button></div>
 </form>
 </body>
 </html>

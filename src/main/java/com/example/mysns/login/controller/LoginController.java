@@ -30,9 +30,6 @@ public class LoginController {
 
     @GetMapping("/login/success")
     public String loginSuccess(){
-//        HttpSession session = request.getSession();
-//        model.addAttribute("name", session.getAttribute("name"));
-//        model.addAttribute("nick", session.getAttribute("nick"));
         return "redirect:/home/show?page=0";
     }
     //로그인
