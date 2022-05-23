@@ -55,8 +55,9 @@
                 FROM CONTENT A
                          INNER JOIN MEMBER B
                                     ON B.ID = A.M_ID
-                WHERE TITLE LIKE CONCAT('%',#{searchWord},'%')
-                   OR CONTENT LIKE CONCAT('%',#{searchWord},'%')
+                WHERE A.TITLE LIKE CONCAT('%',#{searchWord},'%')
+                   OR A.CONTENT LIKE CONCAT('%',#{searchWord},'%')
+                   OR B.NICK LIKE CONCAT('%',#{searchWord},'%')
             ) C
 
         WHERE C.N

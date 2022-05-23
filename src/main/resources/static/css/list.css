@@ -28,3 +28,9 @@ nav>ul>li {
 .font_style{
     font-weight: bold;
 }
+.new_title_input{
+    border: 2px solid; width: 350px;
+}
+.new_content_input{
+    border: 2px solid; width: 350px; height: 300px;
+}

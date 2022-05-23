@@ -273,6 +273,7 @@ public class HomeController {
             memberList = memberService.findByNick(member);
             if(memberList.size() > 0){
                 memberService.updNick(member);
+                session.setAttribute("nick", member.getNewObj());
                 return "ok";
             } else{
                 return "notNick";

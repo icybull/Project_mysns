@@ -147,11 +147,11 @@
     <section class="d-flex">
         <aside>
             <div class="bg-secondary mt-3 p-3"
-                 style="width: 250px; height: 500px; border-radius: 5px; margin-right: 30px">
-                <h5 class="font_style mb-2">
+                 style="width: 250px; height: 450px; border-radius: 5px; margin-right: 30px">
+                <h5 class="font_style mb-4">
                     안녕하세요<br th:text="${nick}+'('+${name}+')님'">
                 </h5>
-                <img th:src="'/upload/'+${profileImg}" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-4">
+                <img th:src="'/upload/'+${profileImg}" alt="프로필 사진" style="width: 220px; height:250px;" class="mb-5">
                 <div class="d-flex">
                     <a href="/home/profile"><button class="btn font_style" type="button" style="width: 130px;">Profile</button></a>
                     <button class="ml-2 btn font_style" type="button" onclick="logOut()" style="width: 80px;">Logout</button>
@@ -169,27 +169,35 @@
 
 
 
-        <article style="width: 900px; height: 1000px;"
-                 class="bg-danger d-flex justify-content-center">
+        <article style="width: 1100px; height: 1000px;"
+                 class="bg-light d-flex ">
             <div class="ml-4 mt-4">
                 <form action="" enctype="multipart/form-data"
                       class="d-flex" id="frm">
                     <div>
-                        <div style="width: 200px; height: 300px; border: solid 1px;">
-                            <img id="View" src="#" alt="이미지 미리보기" width="200px"
-                                 height="300px"/>
+                        <th:block th:if="${content} == null">
+                            <span class="font-weight-bold">* 이미지 등록<br></span>
+                        </th:block>
+                        <th:block th:unless="${content} == null">
+                            <span class="font-weight-bold">* 이미지 수정<br></span>
+                        </th:block>
+                        <div class="mb-2 mt-4" style="width: 355px; height: 405px; border: solid 2px;">
+                            <img id="View" src="#" alt="이미지 미리보기" width="350px"
+                                 height="400px"/>
                         </div>
                         <input type='file' id="file" name="file"/>
                     </div>
+
+
                     <th:block th:if="${content} == null">
-                        <div>
-                            <div>
-                                <span class="font-weight-bold">제목<br></span><input
-                                    type="text" name="title" id="title1">
+                        <div style="margin-left: 100px; margin-top: 50px">
+                            <div class="mb-3">
+                                <span class="font-weight-bold">* 제목<br></span><input
+                                    style="font-size: medium; border: 2px solid; width: 350px; height: 35px" type="text" name="title" id="title1">
                             </div>
-                            <div>
-                                <span class="font-weight-bold">글내용<br></span>
-                                <textarea name="content" cols="30" rows="10" id="content1"></textarea>
+                            <div class="mb-3">
+                                <span class="font-weight-bold">* 글내용<br></span>
+                                <textarea style="font-size: medium; border: 2px solid; width: 350px; height: 300px;" name="content" id="content1"></textarea>
                             </div>
                             <button class="btn" type="button" onclick="BTN_REG()">등록</button>
                             <a href="/home/show?page=0">
@@ -199,18 +207,20 @@
                             </a>
                         </div>
                     </th:block>
+
+
                     <th:block th:unless="${content} == null">
                         <div>
                             <input type="hidden" id="idx" name="idx" th:value="${content.idx}">
                         </div>
-                        <div>
-                            <div>
-                                <span class="font-weight-bold">제목<br></span><input
-                                    type="text" name="title" id="title2" th:value="${content.title}">
+                        <div style="margin-left: 100px; margin-top: 50px">
+                            <div class="mb-3">
+                                <span class="font-weight-bold">* 제목<br></span><input
+                                    style="font-size: medium; border: 2px solid; width: 350px; height: 35px" type="text" name="title" id="title2" th:value="${content.title}">
                             </div>
-                            <div>
-                                <span class="font-weight-bold">글내용<br></span>
-                                <textarea name="content" cols="30" rows="10" id="content2" th:text="${content.content}"></textarea>
+                            <div class="mb-3">
+                                <span class="font-weight-bold">* 글내용<br></span>
+                                <textarea style="font-size: medium; border: 2px solid; width: 350px; height: 300px;" name="content" id="content2" th:text="${content.content}"></textarea>
                             </div>
                             <button class="btn" type="button" onclick="BTN_REG2()">수정</button>
                             <a href="/home/show?page=0">
