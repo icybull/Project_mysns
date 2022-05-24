@@ -234,6 +234,17 @@ public class HomeController {
         model.addAttribute("member", member);
         return "profile";
     }
+    @ResponseBody
+    @PostMapping("/profile/basicProfile")
+    public String basicProfile(HttpSession session){
+        int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
+        Member member = new Member();
+        member.setId(myId);
+        memberService.updBasicImg(member);
+        session.setAttribute("profileImg", "white.png");
+        return "ok";
+    }
+
     @GetMapping("/profileEditPopUp")
     public String profileEditPopUp(Model model, @RequestParam("obj") String obj){
         String oldObj = "";

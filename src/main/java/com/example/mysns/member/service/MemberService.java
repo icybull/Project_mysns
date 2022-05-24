@@ -112,6 +112,9 @@ public class MemberService {
         }
 
     }
+    public int updBasicImg(Member member){
+        return dataDao.update(packageName+"updBasicImg", member);
+    }
     public int updEmail(Member member){
         return dataDao.update(packageName+"updEmail",member);
     }

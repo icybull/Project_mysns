@@ -82,14 +82,53 @@
 
 
 
-
-
-
-
-
-        <article style="height: 1000px;">
+        <article style="width: 1200px;">
+            <article class="d-flex justify-content-between" style="height: 250px">
+                <div class="col-3">
+                    <div class="pt-3 pb-3">
+                        <img src="/img/id.jpg" alt="id 아이콘" style="width:30px; height: 30px;"><span class="ml-2" style="font-weight: bold; font-size: x-large;" th:text="${member.nick}"></span><br>
+                        <img th:src="'/upload/'+ ${member.profileImg}" alt="프로필 사진" style="width: 150px; height:150px; border: 2px solid #bcbcbc; border-radius: 50px; ">
+                    </div>
+                    <div>
+                        <span th:text="${member.name}" style="font-size: large; font-weight: bold;"></span>
+                    </div>
+                </div>
+                <div class="col-3 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;">
+                    <span th:text="'게시물 : ' + ${totalCnt}"></span>
+                </div>
+                <div class="col-3 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;">
+                    팔로워 : 100
+                </div>
+                <div class="col-3 pr-5 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;">
+                    팔로잉 : 90
+                </div>
+            </article>
+            <hr>
+            <article>
+                <div class="p-2 wrap flex-wrap d-flex justify-content-between">
+                    <div th:each="content : ${contentList}" class="p-2 mt-3 font_style" style="border: 5px solid #bcbcbc;">
+                        <h6 style="font-size: x-large; font-weight: bold; display:block; white-space : nowrap; width: 220px; overflow: hidden; text-overflow:ellipsis;"
+                            class="mb-2" th:text="'● ' +${content.title}"></h6>
+                        <img th:src="'/upload/'+ ${content.img}" alt="게시글 사진" style="width: 255px; height:300px; border: 2px solid #bcbcbc;">
+                        <h6 th:text="'● ' +${member.nick}"></h6>
+                        <h6 th:text="'- '+${content.content}" style="display:block; white-space : nowrap; width: 220px; overflow: hidden; text-overflow:ellipsis;"></h6>
+                        <div th:if="${content.mine}">
+                            <input type="hidden" id="idx" name="idx" th:value="${content.idx}" />
+                            <a th:href="@{/home/modify(idx=${content.idx})}"><button
+                                    class="btn" style="width: 120px; height: 35px;">수정</button></a>
+                            <a th:href="@{/home/delete(idx=${content.idx})}"><button
+                                    class="btn" style="width: 120px; height: 35px; margin-left: 10px">삭제</button></a>
+                        </div>
+                        <div th:unless="${content.mine}">
+                            <button class="btn" style="width: 120px; height: 35px;" disabled>수정</button>
+                            <button class="btn" style="width: 120px; height: 35px; margin-left: 10px;"
+                                    disabled>삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </article>
             <!-- 프로필 사진, 이메일, 이름, 닉네임, 게시물 갯수, 팔로우 수, 팔로워 수, 내 컨텐츠  -->
-            <span th:text="${member.profileImg}"></span>
+            <!--<span th:text="${member.profileImg}"></span>
             <span th:text="${member.email}"></span>
             <span th:text="${member.name}"></span>
             <span th:text="${member.nick}"></span>
@@ -100,10 +139,8 @@
                     <span th:text="${content.title}"></span>
                     <span th:text="${content.content}"></span>
                 </div>
-            </th:block>
-
-
-
+            </th:block>-->
+            
         </article>
     </section>
 </div>

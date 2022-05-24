@@ -37,6 +37,11 @@
         SET PROFILEIMG = #{profileImg}
         WHERE ID = #{id}
     </update>
+    <update id="updBasicImg" parameterType="member">
+        UPDATE MEMBER
+        SET PROFILEIMG = 'white.png'
+        WHERE ID = #{id}
+    </update>
     <update id="updEmail" parameterType="member">
         UPDATE MEMBER
         SET EMAIL = #{newObj}

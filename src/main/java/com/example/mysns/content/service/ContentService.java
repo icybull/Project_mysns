@@ -152,6 +152,14 @@ public class ContentService {
     public List<Content> getMyPageContents(int myId){
         Content content = new Content();
         content.setM_id(myId);
-        return dataDao.selectList(packageName+"getMyPageContents", content);
+        List<Content> contentList = dataDao.selectList(packageName+"getMyPageContents", content);
+        for(Content c : contentList){
+            if(c.getM_id() == myId){
+                c.setMine(true);
+            } else {
+                c.setMine(false);
+            }
+        }
+        return contentList;
     }
 }

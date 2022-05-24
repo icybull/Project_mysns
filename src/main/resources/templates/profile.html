@@ -53,6 +53,20 @@
             $("#editObj").val("프로필");
             popUp();
         }
+
+        function defaultImg(){
+            if(confirm('기본 이미지로 변경 하시겠습니까?')){
+                $.ajax({
+                    url :"/home/profile/basicProfile",
+                    datatype : 'text',
+                    type : "POST",
+                    success : function(result){
+                        alert('기본 사진으로 변경되었습니다.');
+                        location.reload();
+                    }
+                });
+            }
+        }
     </script>
 </head>
 <body>
@@ -118,6 +132,7 @@
                </div>
 
                 <button type="button" class="btn btn-secondary" onclick="editProfileImg()">프로필 사진 수정</button>
+                <button type="button" class="btn btn-secondary ml-3" onclick="defaultImg()">기본 프로필 사진</button>
             </div>
             <div>
                 <h4 th:text="${member.email}"></h4>
