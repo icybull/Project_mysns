@@ -32,6 +32,11 @@
         </if>
     </select>
 
+    <update id="updProfileImg" parameterType="member">
+        UPDATE MEMBER
+        SET PROFILEIMG = #{profileImg}
+        WHERE ID = #{id}
+    </update>
     <update id="updEmail" parameterType="member">
         UPDATE MEMBER
         SET EMAIL = #{newObj}

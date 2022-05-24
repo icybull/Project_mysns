@@ -13,8 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 
 @Transactional
@@ -89,6 +95,23 @@ public class MemberService {
     public List<Member> findByNick(Member member){
         return dataDao.selectList(packageName+"findByNick", member);
     }
+
+    public String updProfileImg(Member member, Part file, String path){
+        String fileName = "";
+        try{
+            fileName = file.getSubmittedFileName();
+            UUID uuid = UUID.randomUUID();
+            fileName = uuid.toString() + "_" + fileName;
+            member.setProfileImg(fileName);
+            fileUpload(file,fileName,path);
+            dataDao.update(packageName+"updProfileImg", member);
+        } catch (IOException e){
+            e.printStackTrace();
+        } finally{
+            return fileName;
+        }
+
+    }
     public int updEmail(Member member){
         return dataDao.update(packageName+"updEmail",member);
     }
@@ -100,5 +123,24 @@ public class MemberService {
         member.setPwd(encodedPassword);
         return dataDao.update(packageName+"updPwd",member);
     }
-
+    private void fileUpload(Part file,String fileName, String path) throws IOException {
+        InputStream inputStream = file.getInputStream();
+        File tempFile = new File(path);
+        if (!tempFile.exists()) {
+            tempFile.mkdirs();
+        }
+        FileOutputStream fileOutputStream = new FileOutputStream(path + File.separator + fileName);
+        System.out.println(path + File.separator + fileName);
+        int size = 0;
+        byte[] buffer = new byte[1024];
+        while ((size = inputStream.read(buffer)) != -1) {
+            fileOutputStream.write(buffer, 0, size);
+        }
+        if (inputStream != null){
+            inputStream.close();
+        }
+        if(fileOutputStream != null){
+            fileOutputStream.close();
+        }
+    }
 }

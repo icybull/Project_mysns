@@ -8,7 +8,6 @@ import com.example.mysns.member.service.MemberService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -253,7 +252,8 @@ public class HomeController {
     }
     @ResponseBody
     @PostMapping("/profileEditPopUp/edit")
-    public String editProfile(HttpSession session, Member member){
+    public String editProfile(HttpServletRequest request, Member member, @RequestParam("file") Part file){
+        HttpSession session = request.getSession();
         List<Member> memberList = null;
         int myId = Integer.parseInt(String.valueOf(session.getAttribute("id")));
         member.setId(myId);
@@ -278,6 +278,12 @@ public class HomeController {
             } else{
                 return "notNick";
             }
+        } else if(obj.equals("프로필")){
+            String path = request.getServletContext().getRealPath("/upload");
+            String pI = memberService.updProfileImg(member,file,path);
+            System.out.println(pI);
+            session.setAttribute("profileImg", pI);
+            return "ok";
         } else { //비밀번호
             if(!member.getOldObj().equals(member.getNewObj())){
                 return "notPwd";
