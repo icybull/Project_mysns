@@ -99,9 +99,9 @@ public class HomeController {
         } else {
             Content content = new Content();
             content.setSearchWord(searchWord);
-            cdArr = contentService.searchContents(myId,page, content);
+            cdArr = contentService.searchContents(myId, page, content);
             page = contentService.searchPageNum(content);
-            model.addAttribute(("searchWord"),searchWord);
+            model.addAttribute(("searchWord"), searchWord);
         }
 
         model.addAttribute("num", page);
@@ -172,6 +172,10 @@ public class HomeController {
         model.addAttribute("member", member);
         model.addAttribute("contentList", contentList);
         model.addAttribute("totalCnt", totalCnt);
+        int followingCnt = followService.getFollowingCnt(myId);
+        int followerCnt = followService.getFollowerCnt(myId);
+        model.addAttribute("followingCnt", followingCnt);
+        model.addAttribute("followerCnt", followerCnt);
         return "mypage";
     }
 

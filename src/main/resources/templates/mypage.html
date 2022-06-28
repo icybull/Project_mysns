@@ -96,11 +96,9 @@
                 <div class="col-3 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;">
                     <span th:text="'게시물 : ' + ${totalCnt}"></span>
                 </div>
-                <div class="col-3 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;">
-                    팔로워 : 100
+                <div class="col-3 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;" th:text="'팔로워 : ' + ${followerCnt}">
                 </div>
-                <div class="col-3 pr-5 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;">
-                    팔로잉 : 90
+                <div class="col-3 pr-5 h-100 d-flex align-items-center justify-content-center" style="font-size: x-large;" th:text="'팔로잉 : '+ ${followingCnt}">
                 </div>
             </article>
             <hr>
@@ -127,20 +125,6 @@
                     </div>
                 </div>
             </article>
-            <!-- 프로필 사진, 이메일, 이름, 닉네임, 게시물 갯수, 팔로우 수, 팔로워 수, 내 컨텐츠  -->
-            <!--<span th:text="${member.profileImg}"></span>
-            <span th:text="${member.email}"></span>
-            <span th:text="${member.name}"></span>
-            <span th:text="${member.nick}"></span>
-            <span th:text="'등록된 글 갯수 : ' + ${totalCnt}"></span>
-            <th:block th:each="content : ${contentList}">
-                <div>
-                    <span th:text="${content.img}"></span>
-                    <span th:text="${content.title}"></span>
-                    <span th:text="${content.content}"></span>
-                </div>
-            </th:block>-->
-
         </article>
     </section>
 </div>

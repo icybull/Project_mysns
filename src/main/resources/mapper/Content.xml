@@ -15,8 +15,8 @@
     <select id="searchCnt" resultType="int" parameterType="content">
         SELECT COUNT(*)
         FROM CONTENT
-        WHERE TITLE LIKE CONCAT('%',#{searchWord},'%')
-         OR CONTENT LIKE CONCAT('%',#{searchWord},'%')
+        WHERE TITLE LIKE '%' || #{searchWord} || '%'
+         OR CONTENT LIKE '%' || #{searchWord} || '%'
     </select>
     <!-- 메인화면에 보여질 컨텐츠 -->
     <select id="selContents" parameterType="content" resultType="content">
@@ -55,9 +55,9 @@
                 FROM CONTENT A
                          INNER JOIN MEMBER B
                                     ON B.ID = A.M_ID
-                WHERE A.TITLE LIKE CONCAT('%',#{searchWord},'%')
-                   OR A.CONTENT LIKE CONCAT('%',#{searchWord},'%')
-                   OR B.NICK LIKE CONCAT('%',#{searchWord},'%')
+                WHERE A.TITLE LIKE '%' || #{searchWord} || '%'
+                   OR A.CONTENT LIKE '%' || #{searchWord} || '%'
+                   OR B.NICK LIKE '%' || #{searchWord} || '%'
             ) C
 
         WHERE C.N

@@ -31,4 +31,15 @@
          AND FOLLOWER = #{follower}
     </select>
 
+    <select id="getFollowingCnt" parameterType="follow" resultType="int">
+        SELECT COUNT(*)
+        FROM FOLLOW
+        WHERE FOLLOWING = #{following}
+    </select>
+
+    <select id="getFollowerCnt" parameterType="follow" resultType="int">
+        SELECT COUNT(*)
+        FROM FOLLOW
+        WHERE FOLLOWER = #{follower}
+    </select>
 </mapper>

@@ -41,4 +41,16 @@ public class FollowService {
         return dataDao.delete(packageName+"delFollow", followDto);
     }
 
+    public int getFollowingCnt(int myId){
+        FollowDto followDto = new FollowDto();
+        followDto.setFollowing(myId);
+        return dataDao.selectOne(packageName+"getFollowingCnt", followDto);
+    }
+
+    public int getFollowerCnt(int myId){
+        FollowDto followDto = new FollowDto();
+        followDto.setFollower(myId);
+        return dataDao.selectOne(packageName+"getFollowerCnt", followDto);
+    }
+
 }
