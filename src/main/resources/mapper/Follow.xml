@@ -14,7 +14,7 @@
         (
          #{following},
          #{follower},
-         CURRENT_TIMESTAMP
+         SYSDATE
         )
     </insert>
 

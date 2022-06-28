@@ -81,7 +81,7 @@
          #{title},
          #{content},
          #{m_id},
-         CURRENT_TIMESTAMP
+         SYSDATE
         )
     </insert>
     <!-- 수정 버튼 -->
@@ -92,7 +92,7 @@
             IMG = #{img},
         </if>
         CONTENT = #{content},
-        MOD_DATETIME = CURRENT_TIMESTAMP
+        MOD_DATETIME = SYSDATE
         WHERE IDX = #{idx}
     </update>
     <select id="modifyContent" parameterType="content" resultType="content">
